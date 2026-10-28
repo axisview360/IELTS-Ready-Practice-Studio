@@ -1,894 +1,354 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>IELTS Ready — Practice Studio</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Band 8 Trainer for IELTS</title>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,700&family=Public+Sans:wght@400;600&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --ink:#16233F; --ink-soft:#3B4A68; --paper:#E9ECEF; --paper-deep:#DCE0E4;
-    --card:#FFFFFF; --gold:#C79A3E; --gold-deep:#9C7A2E; --green:#2F7D53;
-    --green-bg:#E4F1EA; --red:#B23B3B; --red-bg:#FBEAEA; --muted:#5C6470;
-    --line:#D3D7DC; --radius:10px;
-  }
-  *{box-sizing:border-box;}
-  body{margin:0;background:var(--paper);color:var(--ink);font-family:'IBM Plex Sans',sans-serif;-webkit-font-smoothing:antialiased;}
-  .mono{font-family:'IBM Plex Mono',monospace;}
-  header.top{background:var(--ink);color:#fff;padding:22px 28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
-  header.top .brand{display:flex;align-items:baseline;gap:10px;}
-  header.top .brand .mark{font-family:'Fraunces',serif;font-weight:700;font-size:26px;letter-spacing:0.5px;}
-  header.top .brand .sub{font-size:12px;color:#B8C2D6;text-transform:uppercase;letter-spacing:1.5px;}
-  .ticket{font-family:'IBM Plex Mono',monospace;font-size:11px;color:#B8C2D6;border:1px solid #3B4A68;padding:6px 12px;border-radius:4px;letter-spacing:1px;}
-  nav.tabs{display:flex;gap:2px;background:var(--paper-deep);padding:0 28px;overflow-x:auto;}
-  nav.tabs button{font-size:14px;font-weight:500;color:var(--ink-soft);background:var(--paper-deep);border:none;padding:14px 20px 12px;cursor:pointer;border-top:3px solid transparent;white-space:nowrap;display:flex;align-items:center;gap:8px;}
-  nav.tabs button .num{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);}
-  nav.tabs button.active{background:var(--paper);color:var(--ink);border-top:3px solid var(--gold);}
-  nav.tabs button:hover:not(.active){background:#E1E4E8;}
-  main{max-width:920px;margin:0 auto;padding:32px 24px 80px;}
-  .view{display:none;} .view.active{display:block;}
-  h1.section-title{font-family:'Fraunces',serif;font-size:28px;font-weight:600;margin:0 0 6px;}
-  p.section-sub{color:var(--muted);margin:0 0 20px;font-size:15px;}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px;margin-bottom:20px;}
-  .card h2{font-family:'Fraunces',serif;font-size:19px;font-weight:600;margin:0 0 12px;}
-  .card h3{font-size:14px;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);margin:0 0 10px;}
-  .gauge-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-bottom:24px;}
-  .gauge-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px;text-align:center;}
-  .gauge-card .label{font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;}
-  .gauge-card svg{width:100px;height:100px;}
-  .gauge-card .band{font-family:'IBM Plex Mono',monospace;font-size:22px;font-weight:600;margin-top:6px;}
-  .gauge-card .status{font-size:12px;color:var(--muted);margin-top:2px;}
-  .tip-list{margin:0;padding-left:20px;} .tip-list li{margin-bottom:8px;line-height:1.5;font-size:14.5px;}
-  .passage{font-size:15px;line-height:1.75;color:var(--ink-soft);background:#FAFAF8;border-left:3px solid var(--gold);padding:16px 20px;border-radius:0 6px 6px 0;margin-bottom:22px;}
-  .passage p{margin:0 0 12px;} .passage p:last-child{margin:0;}
-  .timer-bar{display:flex;align-items:center;justify-content:space-between;background:var(--ink);color:#fff;border-radius:var(--radius);padding:14px 20px;margin-bottom:20px;flex-wrap:wrap;gap:10px;}
-  .timer-bar .time{font-family:'IBM Plex Mono',monospace;font-size:22px;font-weight:600;letter-spacing:1px;}
-  .timer-bar button{background:var(--gold);color:#3A2C08;border:none;padding:8px 16px;border-radius:6px;font-weight:600;font-size:13px;cursor:pointer;}
-  .timer-bar button:hover{background:#D6AE55;} .timer-bar button:disabled{opacity:0.5;cursor:default;}
-  .time.warn{color:#F0A9A9;}
-  .q-block{border-top:1px solid var(--line);padding:18px 0;}
-  .q-block:first-child{border-top:none;padding-top:4px;}
-  .q-block .q-text{font-size:14.5px;font-weight:500;margin-bottom:12px;}
-  .q-num{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:12px;background:var(--ink);color:#fff;width:22px;height:22px;line-height:22px;text-align:center;border-radius:50%;margin-right:8px;}
-  .omr-row{display:flex;flex-direction:column;gap:8px;}
-  .omr-option{display:flex;align-items:center;gap:12px;cursor:pointer;padding:6px 8px;border-radius:6px;}
-  .omr-option:hover{background:#F4F5F1;}
-  .omr-bubble{width:22px;height:22px;border:2px solid var(--ink-soft);border-radius:50%;flex-shrink:0;position:relative;}
-  .omr-option input{display:none;}
-  .omr-option input:checked + .omr-bubble{border-color:var(--gold-deep);}
-  .omr-option input:checked + .omr-bubble::after{content:"";position:absolute;inset:3px;border-radius:50%;background:var(--gold-deep);}
-  .omr-letter{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);width:14px;}
-  .omr-option .opt-text{font-size:14px;}
-  .q-block.correct{background:var(--green-bg);border-radius:6px;padding:18px 12px;}
-  .q-block.incorrect{background:var(--red-bg);border-radius:6px;padding:18px 12px;}
-  .feedback{margin-top:10px;font-size:13px;font-weight:500;}
-  .feedback.ok{color:var(--green);} .feedback.no{color:var(--red);}
-  .blank-input{font-family:'IBM Plex Mono',monospace;font-size:14px;border:1px solid var(--line);border-bottom:2px solid var(--ink-soft);border-radius:4px;padding:6px 10px;width:200px;background:#FAFAF8;}
-  .blank-input:focus{outline:none;border-bottom-color:var(--gold-deep);}
-  button.primary-btn{background:var(--ink);color:#fff;border:none;padding:12px 26px;border-radius:6px;font-size:14px;font-weight:600;cursor:pointer;margin-top:8px;}
-  button.primary-btn:hover{background:#233252;}
-  button.ghost-btn{background:transparent;color:var(--ink-soft);border:1px solid var(--line);padding:11px 22px;border-radius:6px;font-size:14px;font-weight:500;cursor:pointer;margin-top:8px;margin-left:8px;}
-  button.ghost-btn:hover{background:#F1F2EE;}
-  .score-banner{display:flex;align-items:center;justify-content:space-between;background:var(--ink);color:#fff;border-radius:var(--radius);padding:18px 22px;margin:20px 0;flex-wrap:wrap;gap:10px;}
-  .score-banner .big{font-family:'IBM Plex Mono',monospace;font-size:26px;font-weight:600;}
-  .score-banner .lab{font-size:12px;color:#B8C2D6;text-transform:uppercase;letter-spacing:1px;}
-  .audio-box{display:flex;align-items:center;gap:16px;background:var(--ink);color:#fff;border-radius:var(--radius);padding:16px 20px;margin-bottom:22px;}
-  .play-btn{width:46px;height:46px;border-radius:50%;background:var(--gold);border:none;color:#3A2C08;font-size:16px;cursor:pointer;flex-shrink:0;}
-  .play-btn:hover{background:#D6AE55;}
-  .audio-box .meta{font-size:13px;color:#B8C2D6;} .audio-box .meta strong{color:#fff;font-size:14px;display:block;margin-bottom:2px;}
-  textarea.essay{width:100%;min-height:260px;font-family:'IBM Plex Sans',sans-serif;font-size:14.5px;line-height:1.6;border:1px solid var(--line);border-radius:8px;padding:16px;resize:vertical;background:#FAFAF8;}
-  textarea.essay:focus{outline:none;border-color:var(--gold-deep);}
-  .word-count{display:flex;justify-content:space-between;font-size:12.5px;color:var(--muted);margin-top:8px;font-family:'IBM Plex Mono',monospace;}
-  .word-count .ok{color:var(--green);}
-  .rubric-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:6px;}
-  .rubric-item{border:1px solid var(--line);border-radius:8px;padding:14px;}
-  .rubric-item h4{margin:0 0 8px;font-size:13.5px;font-weight:600;}
-  .rubric-item select{width:100%;padding:8px;border-radius:6px;border:1px solid var(--line);font-size:13px;font-family:'IBM Plex Sans',sans-serif;}
-  .chart-caption{font-size:13px;color:var(--muted);margin-top:8px;}
-  .cue-card{background:#FAFAF8;border:2px solid var(--ink);border-radius:8px;padding:20px 22px;margin-bottom:20px;}
-  .cue-card p.prompt{font-weight:600;font-size:15.5px;margin:0 0 10px;font-family:'Fraunces',serif;}
-  .part-badge{display:inline-block;background:var(--gold);color:#3A2C08;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;margin-bottom:10px;letter-spacing:0.5px;}
-  .rec-controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
-  .rec-dot{width:10px;height:10px;border-radius:50%;background:var(--red);display:none;}
-  .rec-dot.live{display:inline-block;animation:blink 1s infinite;}
-  @keyframes blink{50%{opacity:0.2;}}
-  audio{width:100%;margin-top:10px;}
-  .qa-list{list-style:none;padding:0;margin:0;}
-  .qa-list li{padding:10px 0;border-top:1px solid var(--line);font-size:14.5px;}
-  .qa-list li:first-child{border-top:none;}
-  footer.foot{text-align:center;padding:30px;color:var(--muted);font-size:12.5px;}
-  .level-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px;align-items:center;}
-  .level-btn{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500;background:var(--card);border:1px solid var(--line);color:var(--ink-soft);padding:8px 14px;border-radius:20px;cursor:pointer;}
-  .level-btn:hover{border-color:var(--gold-deep);}
-  .level-btn.active{background:var(--ink);color:#fff;border-color:var(--ink);}
-  .refresh-btn{font-size:12.5px;font-weight:500;background:transparent;border:1px dashed var(--muted);color:var(--muted);padding:7px 12px;border-radius:20px;cursor:pointer;margin-left:auto;}
-  .refresh-btn:hover{border-color:var(--ink);color:var(--ink);}
-  .topic-label{font-size:12.5px;color:var(--muted);margin-bottom:14px;}
-  @media(max-width:600px){header.top{padding:16px;} main{padding:24px 14px 60px;} .timer-bar{flex-wrap:wrap;gap:10px;}}
+:root{--bg:#eef3f8;--ink:#12263f;--card:#fff;--line:#c9d6e4;--mark:#ffe066;--pen:#b3261e;--ok:#1b7f5c;--acc:#12263f;--onacc:#fff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1b2b;--ink:#e8eef6;--card:#162538;--line:#2a3d55;--mark:#6b5600;--pen:#ff8a80;--ok:#5fd3a5;--acc:#e8eef6;--onacc:#0f1b2b;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f1b2b;--ink:#e8eef6;--card:#162538;--line:#2a3d55;--mark:#6b5600;--pen:#ff8a80;--ok:#5fd3a5;--acc:#e8eef6;--onacc:#0f1b2b;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "Public Sans",system-ui,sans-serif}
+main{max-width:760px;margin:0 auto;padding:20px 16px 60px}
+h1{font:700 2rem/1.15 Newsreader,Georgia,serif;margin:8px 0 4px}
+h2{font:700 1.3rem/1.3 Newsreader,Georgia,serif;margin:0 0 8px}
+.sub{margin:0 0 18px;opacity:.8}
+nav{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+button{font:inherit;cursor:pointer;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:8px 14px;border-radius:6px}
+button:hover{background:var(--line)}
+button:focus-visible,textarea:focus-visible{outline:3px solid var(--mark);outline-offset:2px}
+button.on,button.go{background:var(--acc);color:var(--onacc)}
+button:disabled{opacity:.5;cursor:wait}
+section{display:none;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px}
+section.on{display:block}
+.b6{border-left:4px solid var(--pen);padding-left:12px;margin:10px 0}
+.b7,.b8{border-left:4px solid var(--ok);padding-left:12px;margin:10px 0}
+.lab{font-weight:600;font-size:.85rem}
+mark{background:var(--mark);color:inherit;padding:0 2px;border-radius:3px}
+textarea{width:100%;min-height:130px;margin:8px 0;padding:10px;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:6px;resize:vertical}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:8px 0}
+.big{font:700 2.2rem Newsreader,Georgia,serif;min-width:90px}
+.cue{font:500 1.2rem/1.5 Newsreader,Georgia,serif;white-space:pre-line;margin:8px 0}
+.out{white-space:pre-wrap;margin-top:12px;padding:12px;border:1px dashed var(--line);border-radius:6px;display:none}
+.out.on{display:block}
+.small{font-size:.85rem;opacity:.75}
+.bar{display:flex;align-items:center;gap:8px;margin:6px 0}.bar b{flex:0 0 150px;font-weight:600;font-size:.85rem}.trk{flex:1;height:14px;background:var(--bg);border:1px solid var(--line);border-radius:7px;position:relative;overflow:hidden}.fil{height:100%;background:var(--ok)}.tgt{position:absolute;top:0;bottom:0;left:88.9%;width:2px;background:var(--pen)}
+.q{margin:10px 0}.q select,.q input{display:block;width:100%;margin-top:4px;padding:8px;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:6px}.mk{font-weight:600;font-size:.9rem}.mk.ok{color:var(--ok)}.mk.no{color:var(--pen)}details{border-bottom:1px solid var(--line);padding:4px 0}summary{cursor:pointer;padding:6px 0}#rp p{margin:8px 0}
+.card{text-align:center;padding:30px 12px;border:1px solid var(--line);border-radius:8px;margin:10px 0}
+.card .p{font:700 1.7rem Newsreader,Georgia,serif}
+@media(prefers-reduced-motion:no-preference){.out.on{animation:f .3s}@keyframes f{from{opacity:0}}}
 </style>
 </head>
 <body>
-
-<header class="top">
-  <div class="brand"><span class="mark">IELTS Ready</span><span class="sub">Practice studio</span></div>
-  <div class="ticket">CANDIDATE No. <span id="candidateNo">0000</span></div>
-</header>
-
-<nav class="tabs">
-  <button class="tab-btn active" data-view="home"><span class="num">00</span> Overview</button>
-  <button class="tab-btn" data-view="reading"><span class="num">01</span> Reading</button>
-  <button class="tab-btn" data-view="listening"><span class="num">02</span> Listening</button>
-  <button class="tab-btn" data-view="writing"><span class="num">03</span> Writing</button>
-  <button class="tab-btn" data-view="speaking"><span class="num">04</span> Speaking</button>
-</nav>
-
 <main>
+<h1>Band 8 Trainer</h1>
+<p class="sub">Move from Band 6 to natural, flexible English. Learn phrases in combination, not single words.</p>
+<nav id="nav"></nav>
 
-  <!-- ================= HOME ================= -->
-  <section id="view-home" class="view active">
-    <h1 class="section-title">Your four-skill check-in</h1>
-    <p class="section-sub">Every section now has three difficulty tiers and a question bank, so each attempt can look different from the last.</p>
-    <div class="gauge-grid" id="gaugeGrid"></div>
-    <div class="card">
-      <h2>What's new</h2>
-      <ul class="tip-list">
-        <li><strong>Three difficulty tiers</strong> — Band 5-6, Band 6-7, and Band 7-8+ — for Reading, Listening, Writing and Speaking.</li>
-        <li><strong>Question banks, not single quizzes</strong> — Reading and Listening each pull from several passages/recordings per tier; hit "New passage" or "New recording" for a different one.</li>
-        <li><strong>Shuffled answer order</strong> — multiple-choice options are re-shuffled every time a quiz loads, so the position of the correct answer isn't a pattern you can memorise.</li>
-        <li><strong>Rotating prompts</strong> — Writing charts/essay topics and Speaking cue cards also rotate through a pool per tier.</li>
-      </ul>
-    </div>
-    <div class="card">
-      <h2>General exam tips</h2>
-      <ul class="tip-list">
-        <li>Band scores reward <em>task completion</em> as much as accuracy — always answer every question, even a guess.</li>
-        <li>In Reading and Listening, spelling and word limits are graded strictly.</li>
-        <li>In Writing, a clear structure usually scores higher than beautiful sentences with no plan.</li>
-        <li>In Speaking, fluency and self-correction matter more than a big vocabulary.</li>
-      </ul>
-    </div>
-  </section>
+<section id="drill">
+<h2>Upgrade drill</h2>
+<p class="small">Rewrite the Band 6 sentence yourself first. Then compare.</p>
+<div class="b6"><span class="lab">Band 6</span><div id="d6"></div></div>
+<textarea id="dmine" style="min-height:80px" placeholder="Your upgraded version"></textarea>
+<div class="row"><button id="dshow" class="go">Show Band 7 and 8</button><button id="dchk">Examiner checks mine</button><button id="dnext">Next sentence</button></div>
+<div id="dans" style="display:none">
+<div class="b7"><span class="lab">Band 7</span><div id="d7"></div></div>
+<div class="b8"><span class="lab">Band 8</span><div id="d8"></div></div>
+<p class="small" id="dnote"></p>
+</div>
+<div class="out" id="dout"></div>
+</section>
 
-  <!-- ================= READING ================= -->
-  <section id="view-reading" class="view">
-    <h1 class="section-title">Reading practice</h1>
-    <p class="section-sub">Pick a tier, read the passage, then answer all 5 questions. Aim to finish in 8 minutes.</p>
-    <div class="level-row" id="readLevelRow"></div>
-    <div class="timer-bar">
-      <div><span class="mono" style="font-size:12px;color:#B8C2D6;">TIME REMAINING</span><br><span class="time mono" id="readTime">08:00</span></div>
-      <button id="readTimerBtn" onclick="toggleTimer('read')">Start</button>
-    </div>
-    <div id="readingPassageBox"></div>
-    <div id="readingQuestions"></div>
-    <div id="readingResult"></div>
-  </section>
+<section id="cards">
+<h2>Phrase flashcards</h2>
+<div class="row"><label class="lab" for="ctopic">Topic</label><select id="ctopic" style="padding:8px;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:6px"></select></div>
+<p class="small" id="cprog"></p>
+<div class="card"><div class="p" id="cp"></div><div id="cm" style="margin-top:10px;display:none"></div></div>
+<div class="row"><button id="cflip">Show meaning</button><button id="cagain">Again</button><button id="cgot" class="go">Got it</button></div>
+<p class="lab" style="margin:14px 0 0">Use it in your own sentence</p>
+<textarea id="ctext" style="min-height:80px" placeholder="Write one or two sentences using the phrase above"></textarea>
+<div class="row"><button id="cscore" class="go">Score my sentence</button></div>
+<div class="out" id="cout"></div>
+<details><summary class="lab">Add my own word</summary><div class="q"><input id="aw1" type="text" placeholder="Phrase or word" autocomplete="off"><input id="aw2" type="text" placeholder="Meaning or example (optional)" autocomplete="off"></div><div class="row"><button id="awb">Add to My words</button><span class="small" id="aws"></span></div></details>
+<p class="small">Missed cards come back more often. Progress saves in this browser.</p>
+</section>
 
-  <!-- ================= LISTENING ================= -->
-  <section id="view-listening" class="view">
-    <h1 class="section-title">Listening practice</h1>
-    <p class="section-sub">Press play once — just like the real test, the recording only runs through one time.</p>
-    <div class="card">
-      <h2>Listening skills checklist</h2>
-      <ul class="tip-list">
-        <li>Before you press play, read every question and its word limit — "no more than two words" is graded strictly, and an extra word makes the whole answer wrong.</li>
-        <li>Use those few seconds of silence to predict what kind of word is missing — a name, a date, a number, a place — so your ear knows what to listen for.</li>
-        <li>The words on the page are almost always a paraphrase of what you'll actually hear, not the exact same words, so don't wait for an exact match.</li>
-        <li>Numbers and letters that sound similar (like 13 vs 30, or B vs D) are a classic trap — say them out loud during practice.</li>
-        <li>In multiple choice, resist writing down the first option you hear — recordings often mention every choice, then correct themselves partway through.</li>
-        <li>Spelling and grammar count as much as hearing the right word — a correct answer spelled wrong is still marked wrong.</li>
-        <li>Never leave a blank. An educated guess can still score; an empty box never can.</li>
-      </ul>
-    </div>
-    <div class="level-row" id="listenLevelRow"></div>
-    <div class="audio-box">
-      <button class="play-btn" id="playBtn" onclick="playListening()"><span id="playIcon">&#9654;</span></button>
-      <div class="meta"><strong id="audioTitle">Loading...</strong><span id="audioSub"></span></div>
-    </div>
-    <div id="listeningQuestions"></div>
-    <div id="listeningResult"></div>
-  </section>
+<section id="speak">
+<h2>Speaking</h2>
+<div class="row" id="ssel"></div>
+<div class="cue" id="scue"></div>
+<div class="row"><button id="snew">New cue card</button><button id="sprep">1 min prep</button><button id="stalk" class="go">2 min speak</button><span class="big" id="stime">1:00</span></div>
+<p class="small">Speak out loud, then type or dictate what you said. Examiners reward ideas that develop, so give reasons and examples.</p>
+<div class="row"><button id="smic">Record with mic</button><span class="small" id="sstat"></span></div>
+<textarea id="stext" placeholder="Your answer (transcript)"></textarea>
+<button id="sas" class="go">Assess like an examiner</button>
+<div class="out" id="sout"></div>
+</section>
 
-  <!-- ================= WRITING ================= -->
-  <section id="view-writing" class="view">
-    <h1 class="section-title">Writing practice</h1>
-    <p class="section-sub">One shared 40-minute timer to practise pacing across both tasks.</p>
-    <div class="timer-bar">
-      <div><span class="mono" style="font-size:12px;color:#B8C2D6;">TIME REMAINING</span><br><span class="time mono" id="writeTime">40:00</span></div>
-      <button id="writeTimerBtn" onclick="toggleTimer('write')">Start</button>
-    </div>
-
-    <div class="card">
-      <h3>Task 1 — Report</h3>
-      <div class="level-row" style="margin-bottom:10px;">
-        <button class="refresh-btn" onclick="newTask1()">New chart ↻</button>
-      </div>
-      <h2 id="task1Title">Describe the chart below</h2>
-      <p id="task1Prompt" style="font-size:14px;color:var(--ink-soft);"></p>
-      <div id="task1Chart"></div>
-      <p class="chart-caption" id="task1Caption"></p>
-      <textarea class="essay" id="task1Text" placeholder="Start writing your Task 1 report here..." oninput="updateWordCount('task1')"></textarea>
-      <div class="word-count"><span id="task1Count">0 words</span><span>Target: 150+</span></div>
-    </div>
-
-    <div class="card">
-      <h3>Task 2 — Essay</h3>
-      <div class="level-row" id="task2LevelRow" style="margin-bottom:10px;"></div>
-      <h2>Give your opinion</h2>
-      <p id="task2Prompt" style="font-size:14px;color:var(--ink-soft);"></p>
-      <textarea class="essay" id="task2Text" placeholder="Start writing your Task 2 essay here..." oninput="updateWordCount('task2')"></textarea>
-      <div class="word-count"><span id="task2Count">0 words</span><span>Target: 250+</span></div>
-    </div>
-
-    <div class="card">
-      <h2>Self-assessment checklist</h2>
-      <p class="section-sub" style="margin-bottom:14px;">Writing can't be auto-graded reliably, so rate your own draft honestly against the four official criteria.</p>
-      <div class="rubric-grid">
-        <div class="rubric-item"><h4>Task achievement</h4><select><option>Not yet rated</option><option>Fully addresses the task</option><option>Mostly on-topic, minor gaps</option><option>Off-topic in places</option></select></div>
-        <div class="rubric-item"><h4>Coherence &amp; cohesion</h4><select><option>Not yet rated</option><option>Clear paragraphing, logical flow</option><option>Some linking issues</option><option>Hard to follow</option></select></div>
-        <div class="rubric-item"><h4>Lexical resource</h4><select><option>Not yet rated</option><option>Varied, natural vocabulary</option><option>Adequate, some repetition</option><option>Limited range</option></select></div>
-        <div class="rubric-item"><h4>Grammatical range</h4><select><option>Not yet rated</option><option>Mix of simple and complex, few errors</option><option>Some errors, meaning still clear</option><option>Frequent errors</option></select></div>
-      </div>
-      <button class="primary-btn" onclick="markWritingDone()">Mark writing session complete</button>
-    </div>
-  </section>
-
-  <!-- ================= SPEAKING ================= -->
-  <section id="view-speaking" class="view">
-    <h1 class="section-title">Speaking practice</h1>
-    <p class="section-sub">Work through all three parts. Recording is optional — it just lets you play yourself back afterwards.</p>
-    <div class="level-row" id="speakLevelRow"></div>
-
-    <div class="card">
-      <span class="part-badge">PART 1 · Introduction</span>
-      <h2>Warm-up questions</h2>
-      <ul class="qa-list" id="part1List"></ul>
-      <button class="refresh-btn" onclick="newPart1()">New questions ↻</button>
-    </div>
-
-    <div class="card">
-      <span class="part-badge">PART 2 · Long turn</span>
-      <h2>Cue card</h2>
-      <div class="cue-card" id="cueCardBox"></div>
-      <button class="refresh-btn" onclick="newPart2()" style="margin-bottom:14px;">New topic ↻</button>
-      <div class="timer-bar">
-        <div><span class="mono" style="font-size:12px;color:#B8C2D6;" id="speakPhaseLabel">1 MIN PREPARATION</span><br><span class="time mono" id="speakTime">01:00</span></div>
-        <button id="speakTimerBtn" onclick="startSpeakingTimer()">Start</button>
-      </div>
-      <div class="rec-controls">
-        <button class="ghost-btn" id="recBtn" onclick="toggleRecording()">Start recording</button>
-        <span class="rec-dot" id="recDot"></span>
-        <span id="recStatus" style="font-size:13px;color:var(--muted);"></span>
-      </div>
-      <audio id="recPlayback" controls style="display:none;"></audio>
-    </div>
-
-    <div class="card">
-      <span class="part-badge">PART 3 · Discussion</span>
-      <h2>Follow-up questions</h2>
-      <ul class="qa-list" id="part3List"></ul>
-      <button class="refresh-btn" onclick="newPart3()">New questions ↻</button>
-    </div>
-
-    <button class="primary-btn" onclick="markSpeakingDone()">Mark speaking session complete</button>
-  </section>
-
+<section id="write">
+<h2>Writing</h2>
+<div class="row" id="wsel"></div>
+<div class="cue" id="wcue"></div>
+<div class="row"><button id="wnew">New question</button><button id="wtimer">Start timer</button><span class="big" id="wtime">40:00</span><span class="small" id="wcount">0 words</span></div>
+<textarea id="wtext" style="min-height:260px" placeholder="Write at least 250 words"></textarea>
+<button id="was" class="go">Assess like an examiner</button>
+<div class="out" id="wout"></div>
+</section>
+<section id="read"><h2>Reading</h2>
+<div id="rg"></div>
+<div class="row"><button id="rnew">Next passage</button><button id="rtimer">Start 20 min timer</button><span class="big" id="rtm">20:00</span></div>
+<h2 id="rtitle" style="margin-top:10px"></h2>
+<div id="rp"></div>
+<p class="lab">Matching headings: choose the best heading for each paragraph.</p><div id="rh"></div>
+<p class="lab">True, False or Not Given</p><div id="rq"></div>
+<p class="lab" id="rxh">More question types: matching information, sentence completion and multiple choice</p><div id="rx"></div>
+<div class="row"><button id="rchk" class="go">Check answers</button><button id="rwhy">Explain my mistakes</button><span class="lab" id="rsc"></span></div>
+<div class="out" id="rout"></div></section>
+<section id="listen"><h2>Listening</h2>
+<div id="lg"></div>
+<p class="small">The practice audio is read by your browser’s built-in voice. It is not real IELTS audio or real accents, so also use official practice tests.</p>
+<div class="row"><button id="lnew">Next recording</button><button id="lplay" class="go">Play audio</button><button id="lstop">Stop</button></div>
+<p class="small">In the real test you hear it once. Read the questions first, then play once.</p>
+<div id="lq"></div>
+<div class="row"><button id="lchk" class="go">Check answers</button><button id="lwhy">Explain my mistakes</button><span class="lab" id="lsc"></span></div>
+<div class="out" id="lt"></div><div class="out" id="lout"></div></section>
+<section id="prog"><h2>Progress</h2><p class="small">Averages of your last 5 assessed attempts. Scores are examiner estimates.</p><div id="pbars"></div><div id="plist" style="margin-top:12px"></div><div id="praw" style="margin-top:12px"></div><div class="row"><button id="pclr">Clear history</button></div></section>
+<section id="plan"><h2>Today’s plan</h2><p class="small" id="pdesc"></p><p class="small" id="acct"></p>
+<div class="q"><label class="lab" for="ptg">Target band</label><select id="ptg"><option>6.5</option><option>7</option><option>7.5</option><option>8</option><option>8.5</option><option>9</option></select><label class="lab" for="ptt" style="margin-top:8px;display:block">Test type</label><select id="ptt"><option value="a">Academic</option><option value="g">General Training</option></select></div>
+<div id="ptasks"></div>
+<div class="row" style="margin-top:14px"><button id="pexp">Back up my data</button><button id="pimp">Restore from backup</button></div>
+<textarea id="pbk" style="min-height:70px;display:none" placeholder="Backup text"></textarea><button id="pgo" class="go" style="display:none">Restore</button><p class="small" id="pst"></p></section>
+<section id="gram"><h2>Grammar range drill</h2><p class="small">Band 7 and 8 reward a mix of structures. Rewrite using the target structure, then compare.</p>
+<div class="b6"><span class="lab" id="gty"></span><div id="gpl"></div></div>
+<textarea id="gmine" style="min-height:80px" placeholder="Your sentence"></textarea>
+<div class="row"><button id="gshow" class="go">Show model</button><button id="gchk">Examiner checks mine</button><button id="gnext">Next</button></div>
+<div class="b8" id="gans" style="display:none"></div><div class="out" id="gout"></div></section>
+<section id="struct"><h2>Essay parts</h2><p class="small">Short rounds on one part of a Task 2 essay.</p>
+<div class="row" id="stsel"></div><div class="cue" id="stq"></div><p class="small" id="sti"></p>
+<textarea id="stx" style="min-height:90px" placeholder="Your answer"></textarea>
+<div class="row"><button id="stas" class="go">Examiner marks this</button><button id="stnew">New question</button></div><div class="out" id="stout"></div></section>
+<section id="mist"><h2>Mistake log</h2><p class="small">Errors the examiner finds in your Speaking and Writing are logged here by type. Fix your most frequent type first.</p><div id="mbars"></div><div id="mlist" style="margin-top:12px;white-space:pre-wrap"></div><div class="row"><button id="mdrill" class="go">Quiz me on my mistakes</button><button id="mclr">Clear log</button></div><div id="mquiz"></div></section>
 </main>
 
-<footer class="foot">IELTS Ready — a self-study practice tool. Not affiliated with IDP, British Council, or Cambridge Assessment English. All passages, recordings, and prompts are original content written for this tool.</footer>
-
 <script>
-const scores = { reading:null, listening:null, writing:false, speaking:false };
-document.getElementById('candidateNo').textContent = String(Math.floor(1000+Math.random()*8999));
+const ACCT={mode:"local",name:""};
+const ST={p:"b8:local:",cd:null,tm:0,dirty:false,K:["b8box","b8user","b8hist","b8raw","b8err","b8days","b8prof"],
+ getItem(k){try{return window.localStorage.getItem(this.p+k)}catch(e){return null}},
+ setItem(k,v){try{window.localStorage.setItem(this.p+k,v)}catch(e){}this.push()},
+ removeItem(k){try{window.localStorage.removeItem(this.p+k)}catch(e){}this.push()},
+ push(){if(!this.cd)return;clearTimeout(this.tm);this.tm=setTimeout(async()=>{const kv={},t=Date.now();this.K.forEach(k=>{const v=this.getItem(k);if(v!=null)kv[k]=v});try{window.localStorage.setItem(this.p+"b8t",String(t));await this.cd.set({t,kv})}catch(e){}},1500)}};
+async function boot(){
+ let uid="local",db=null;
+ try{if(typeof claude!=="undefined"){
+  const w=p=>Promise.race([p,new Promise(r=>setTimeout(()=>r(null),4000))]);
+  const u=await w(claude.use("user"));
+  if(u){const me=await u.me();if(me&&me.id){uid=me.id;ACCT.name=me.name||""}}
+  if(uid!=="local")db=await w(claude.use("db"));
+ }}catch(e){}
+ ST.p="b8:"+uid+":";
+ try{const L=window.localStorage;if(!L.getItem("b8:migrated")){ST.K.forEach(k=>{const v=L.getItem(k);if(v!=null&&L.getItem(ST.p+k)==null)L.setItem(ST.p+k,v)});L.setItem("b8:migrated","1")}}catch(e){}
+ if(db){try{ST.cd=db.doc("data/users/"+uid+"/state");const s=await ST.cd.get(),r=s.exists?s.data():null,lt=+(ST.getItem("b8t")||0);
+  if(r&&r.kv&&r.t>lt){ST.K.forEach(k=>{try{if(typeof r.kv[k]==="string")window.localStorage.setItem(ST.p+k,r.kv[k]);else window.localStorage.removeItem(ST.p+k)}catch(e){}});window.localStorage.setItem(ST.p+"b8t",String(r.t))}else ST.dirty=true;
+  ACCT.mode="cloud"}catch(e){ST.cd=null}}
+ main();if(ST.dirty&&ST.cd)ST.push();
+}
+async function main(){
+let PF={target:8,test:"a"};try{PF=Object.assign(PF,JSON.parse(ST.getItem("b8prof")||"{}"))}catch(e){}
+const $=id=>document.getElementById(id);
+const DR=[
+["Pollution is a big problem in cities.","Air pollution poses a serious threat to urban communities.","Urban air pollution has become a pressing public health concern that authorities can no longer afford to overlook.","pressing public health concern, poses a serious threat, urban communities, can no longer afford to overlook"],
+["Many people use phones too much.","A growing number of people are overly reliant on their phones.","Excessive screen time has become so ingrained in daily routines that many people struggle to disconnect.","overly reliant on, so ingrained in daily routines, struggle to disconnect"],
+["Exercise is good for health.","Regular exercise is conducive to both physical and mental well-being.","Staying active not only safeguards long-term health but also builds mental resilience.","conducive to, safeguards long-term health, builds mental resilience"],
+["The government should spend more money on education.","Governments should allocate a larger share of the budget to education.","Prioritising education funding yields lasting returns, since a skilled workforce drives economic growth.","allocate a larger share, yields lasting returns, drives economic growth"],
+["I like my hometown because it is quiet and nice.","I’m fond of my hometown because of its tranquil, laid-back atmosphere.","What I appreciate most about my hometown is its unhurried pace of life, a welcome escape from city bustle.","tranquil, laid-back atmosphere, unhurried pace of life, a welcome escape"],
+["Technology has changed how we work.","Technology has transformed the way we work.","Advances in technology have fundamentally reshaped the workplace, blurring the line between office and home.","transformed, fundamentally reshaped, blurring the line between"],
+["Young people have problems finding jobs.","Young people struggle to secure employment.","Graduates often find it hard to get a foot on the career ladder because of fierce competition and limited experience.","secure employment, get a foot on the career ladder, fierce competition"],
+["Tourism is good for the economy but bad for nature.","Tourism boosts the economy, yet it can take a toll on the environment.","While tourism generates much-needed revenue, it often comes at the expense of fragile ecosystems.","take a toll on, much-needed revenue, at the expense of, fragile ecosystems"]];
+const FC=[["take a toll on","to cause gradual harm. Long working hours take a toll on your health."],["a double-edged sword","something with both good and bad effects. Social media is a double-edged sword."],["alleviate","to make a problem less severe. Cheaper housing could alleviate poverty."],["exacerbate","to make a bad situation worse. Traffic exacerbates air pollution."],["mitigate","to reduce the seriousness of something. Trees help mitigate the effects of heat."],["foster","to encourage something to develop. Schools should foster creativity."],["detrimental to","harmful to. Lack of sleep is detrimental to concentration."],["a growing body of evidence","more and more research. A growing body of evidence links diet to mood."],["on the whole","in general. On the whole, I prefer studying at home."],["by and large","mostly. By and large, people here are very welcoming."],["a bone of contention","a topic people argue about. Tuition fees remain a bone of contention."],["the lion’s share of","the biggest part. Rent takes the lion’s share of my salary."],["a steep learning curve","something hard to learn at first. The job had a steep learning curve."],["come to terms with","to accept a difficult fact. She came to terms with living abroad."],["a blessing in disguise","bad at first but good later. Losing that job was a blessing in disguise."],["off the beaten track","away from usual tourist places. We stayed in a village off the beaten track."],["bustling","full of busy activity. The market is bustling on weekends."],["the tip of the iceberg","a small visible part of a bigger problem. Littering is just the tip of the iceberg."],["it goes without saying","it is obvious. It goes without saying that health comes first."],["be hard-pressed to","to find it difficult to. I’d be hard-pressed to choose one favourite."],["bring about change","to cause change. Education can bring about lasting change."],["in the long run","over a long period. Saving pays off in the long run."],
+["a pressing issue","an urgent problem. Housing is a pressing issue in big cities."],["pose a threat to","to be dangerous for. Plastic poses a threat to marine life."],["raise awareness of","to help people notice an issue. Campaigns raise awareness of mental health."],["a wide range of","many different kinds. The university offers a wide range of courses."],["play a crucial role in","to be very important in. Teachers play a crucial role in shaping values."],["reap the benefits","to enjoy the good results. Early starters reap the benefits later."],["take it for granted","to not appreciate something. We take clean water for granted."],["strike a balance","to find a fair middle point. It is hard to strike a balance between work and rest."],["keep pace with","to move as fast as. Wages have not kept pace with prices."],["a thriving economy","a successful, growing economy. The region has a thriving economy."],["soaring prices","prices rising very quickly. Soaring prices hit low-income families first."],["a sedentary lifestyle","a life with little movement. A sedentary lifestyle raises health risks."],["peer pressure","pressure from people your own age. Teenagers often give in to peer pressure."],["job satisfaction","feeling happy with your work. Good colleagues improve job satisfaction."],["work-life balance","a healthy split between work and personal life. Remote work can improve work-life balance."],["cutting-edge","very modern and advanced. The lab uses cutting-edge equipment."],["come up with","to think of an idea. She came up with a clever solution."],["far-reaching","having wide effects. The law had far-reaching consequences."],["thought-provoking","making you think deeply. It was a thought-provoking documentary."],["hands-on experience","practical experience. Interns gain hands-on experience."],["sustainable","able to continue without harming the environment. We need sustainable energy."],["deprive someone of","to take something away from someone. Poverty can deprive children of an education."],["a vicious circle","a bad situation that keeps repeating. Debt can become a vicious circle."],["heavily reliant on","depending a lot on. The town is heavily reliant on tourism."],["bridge the gap","to reduce a difference. Online courses bridge the gap between rural and urban students."],["a matter of personal choice","something each person decides. Diet is a matter of personal choice."],["ever-increasing","always growing. Ever-increasing costs worry many families."],["to some extent","partly. I agree with this view to some extent."],["as far as I’m concerned","in my opinion. As far as I’m concerned, public transport should be cheaper."],["to be honest","to speak frankly. To be honest, I’m not a big fan of crowds."],["be keen on","to like something very much. I’m keen on photography."],["an eye-opening experience","an experience that teaches you something new. Volunteering abroad was eye-opening."],["second to none","the best. The seafood here is second to none."],["on the spur of the moment","without planning. We booked the trip on the spur of the moment."],["a sense of belonging","feeling part of a group. Clubs give students a sense of belonging."],["meet the needs of","to give people what they require. Schools must meet the needs of every pupil."],["reduce your carbon footprint","to lower the harm your lifestyle does to the climate. Cycling helps reduce your carbon footprint."],["spark a debate","to start a discussion. The proposal sparked a heated debate."],["stand out from the crowd","to be different and noticeable. A strong portfolio helps you stand out from the crowd."],["a wealth of","a large amount of something useful. The internet offers a wealth of information."]];
+const TP={};
+const DK={Health:[["a balanced diet","food that gives the body what it needs. A balanced diet includes fruit and vegetables."],["take up a sport","to start doing a sport. I took up swimming last year."],["on the mend","getting better after an illness. My father is on the mend."],["preventive care","medical steps taken to stop illness. Preventive care saves money later."],["burn out","to become exhausted from too much work. Nurses often burn out."],["mental well-being","good emotional health. Exercise boosts mental well-being."],["a public health campaign","an effort to teach people about health. A public health campaign cut smoking rates."],["under the weather","slightly ill. I’m a bit under the weather today."],["peace of mind","a calm feeling of not worrying. Insurance gives peace of mind."]],Education:[["rote learning","learning by repeating without understanding. Rote learning is common before exams."],["critical thinking","judging information carefully. Schools should teach critical thinking."],["a well-rounded education","teaching many skills, not just exam subjects. A well-rounded education includes arts and sport."],["lifelong learning","continuing to learn throughout life. Lifelong learning keeps careers flexible."],["tuition fees","money paid for teaching. Rising tuition fees put students in debt."],["drop out of","to leave school before finishing. Many students drop out of college in the first year."],["hands-on learning","learning by doing. Science is best taught through hands-on learning."],["academic performance","how well someone does at school. Sleep affects academic performance."],["a level playing field","a fair situation for everyone. Free textbooks create a level playing field."]],Technology:[["the digital divide","the gap between people with and without technology. The digital divide separates rural and urban students."],["keep up with","to stay at the same level as. It is hard to keep up with new apps."],["artificial intelligence","computer systems that do tasks needing human thinking. Artificial intelligence is reshaping offices."],["data privacy","protection of personal information. Data privacy worries many users."],["tech-savvy","good at using technology. My grandmother is surprisingly tech-savvy."],["screen time","time spent looking at devices. Limit screen time before bed."],["go viral","to spread quickly online. The video went viral overnight."],["be glued to","to look at something constantly. Teenagers are glued to their phones."],["a game changer","something that greatly changes a situation. Online banking was a game changer."],["information overload","too much information to process. Social media causes information overload."]],Travel:[["a once-in-a-lifetime experience","something you will probably do only once. Seeing the northern lights was a once-in-a-lifetime experience."],["a tourist trap","a crowded, overpriced place. We avoided the tourist trap near the station."],["breathtaking scenery","extremely beautiful views. The island has breathtaking scenery."],["broaden your horizons","to gain new experiences and ideas. Travel broadens your horizons."],["go sightseeing","to visit famous places. We went sightseeing all morning."],["immerse yourself in","to become fully involved in. Immerse yourself in the local culture."],["get away from it all","to escape daily stress. A cabin lets you get away from it all."],["peak season","the busiest time of year. Hotels are expensive in peak season."],["culture shock","confusion when meeting an unfamiliar culture. Culture shock fades after a few weeks."]],Environment:[["renewable energy","energy from sources that do not run out. Renewable energy is getting cheaper."],["biodiversity","the variety of living things. Logging threatens biodiversity."],["greenhouse gas emissions","gases that warm the planet. Transport produces greenhouse gas emissions."],["single-use plastic","plastic thrown away after one use. Many cities ban single-use plastic."],["deforestation","the clearing of forests. Deforestation destroys habitats."],["natural resources","materials from nature such as water and oil. We are using up natural resources."],["conserve","to protect and use carefully. We should conserve water."],["eco-friendly","not harmful to the environment. I buy eco-friendly products."]]};
+Object.keys(DK).forEach(t=>DK[t].forEach(w=>{FC.push(w);TP[w[0]]=t}));
+let UW=[];try{UW=JSON.parse(ST.getItem("b8user")||"[]")}catch(e){}
+UW.forEach(w=>{FC.push(w);TP[w[0]]="My words"});
+function addw(p,m){p=p.trim();if(!p||FC.some(c=>c[0].toLowerCase()===p.toLowerCase()))return false;const w=[p,m||"Added by me."];UW.push(w);FC.push(w);TP[p]="My words";try{ST.setItem("b8user",JSON.stringify(UW))}catch(e){}return true}
+const CU=["Describe a place you visited that left a strong impression on you.\nYou should say:\nwhere it was\nwhen you went there\nwhat you did there\nand explain why it impressed you.","Describe a skill you would like to learn.\nYou should say:\nwhat the skill is\nwhy you want to learn it\nhow you would learn it\nand explain how it could help you in the future.","Describe a person who has influenced you.\nYou should say:\nwho the person is\nhow you know them\nwhat they did\nand explain why they influenced you.","Describe a time you helped someone.\nYou should say:\nwho you helped\nwhat the problem was\nhow you helped\nand explain how you felt afterwards.","Describe a piece of technology you use every day.\nYou should say:\nwhat it is\nhow you use it\nhow long you have had it\nand explain why it is important to you.","Describe a traditional festival in your country.\nYou should say:\nwhat the festival is\nwhen it takes place\nwhat people do\nand explain what it means to you."];
+const WQ=["Some people think children should start formal education at a very early age, while others believe they should not start school until they are older. Discuss both views and give your own opinion.","Many people now work from home instead of in an office. Do the advantages of this development outweigh the disadvantages?","In many cities, traffic and pollution are increasing. What are the causes of this problem, and what measures can be taken to solve it?","Some people believe that governments should spend money on public transport rather than building new roads. To what extent do you agree or disagree?","Tourism brings money to local areas but can damage the environment and local culture. Do you think the benefits outweigh the drawbacks?"];
 
-document.querySelectorAll('.tab-btn').forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-    document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
-    btn.classList.add('active');
-    document.getElementById('view-'+btn.dataset.view).classList.add('active');
-  });
-});
+// tabs
+[["plan","Today"],["drill","Upgrade drill"],["gram","Grammar"],["struct","Essay parts"],["cards","Flashcards"],["speak","Speaking"],["write","Writing"],["read","Reading"],["listen","Listening"],["prog","Progress"],["mist","Mistakes"]].forEach(([id,t],i)=>{const b=document.createElement("button");b.textContent=t;b.dataset.t=id;b.onclick=()=>show(id);$("nav").append(b)});
+function show(id){document.querySelectorAll("section").forEach(s=>s.classList.toggle("on",s.id===id));document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.t===id));try{history.replaceState(null,"","#"+id)}catch(e){}}
+show(["plan","gram","struct","drill","cards","speak","write","read","listen","prog","mist"].includes(location.hash.slice(1))?location.hash.slice(1):"plan");
 
-function shuffle(arr){
-  const a = arr.slice();
-  for(let i=a.length-1;i>0;i--){
-    const j = Math.floor(Math.random()*(i+1));
-    [a[i],a[j]]=[a[j],a[i]];
-  }
-  return a;
-}
-function pickRandom(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+// examiner
+const SYS="You are a strict, experienced IELTS examiner. The candidate is about Band 6 and aims for Band 8. Score honestly using the public IELTS band descriptors. Reply in plain text only. Do not use markdown symbols or em dashes. Use this layout: Estimated bands (each criterion, then overall, in 0.5 steps); What is working; Top 3 problems, quoting the exact phrase; Band 8 rewrite of the 3 weakest sentences; 5 natural collocations to learn from this topic. Writing criteria: Task Response, Coherence and Cohesion, Lexical Resource, Grammatical Range and Accuracy. Speaking criteria: Fluency and Coherence, Lexical Resource, Grammatical Range and Accuracy. For speaking, say pronunciation cannot be judged from text and skip it. Be concise and encouraging but honest. State that this is an estimate, not an official score.";
+async function exam(prompt,out,btn,kind){
+ out.classList.add("on");out.textContent="Examiner is reading...";btn.disabled=true;
+ try{const s=await claude.use("sample");
+  if(!s){out.textContent="The examiner needs Claude access. Open this page inside claude.ai.";return}
+  const r=await s(SYS.replace("aims for Band 8","aims for Band "+PF.target+" and is taking IELTS "+(PF.test==="g"?"General Training":"Academic"))+"\n\n"+prompt,{cache:false,modelTier:"complex",onText:({text})=>{out.textContent=clean(text)}});
+  if(r&&r.text){out.textContent=clean(r.text);if(kind){log(kind,r.text);harvest(r.text,out)}}
+ }catch(e){out.textContent=e&&e.code==="not_granted"?"Permission was declined. Reload and allow the examiner to use Claude.":"Could not reach the examiner. Try again in a moment."}
+ finally{btn.disabled=false}}
 
-function bandFromFraction(f){ if(f===null) return null; return Math.round((4+f*5)*2)/2; }
-function renderGauges(){
-  const grid = document.getElementById('gaugeGrid');
-  const defs = [{key:'reading',label:'Reading'},{key:'listening',label:'Listening'},{key:'writing',label:'Writing'},{key:'speaking',label:'Speaking'}];
-  grid.innerHTML = defs.map(d=>{
-    let band, statusText, pct;
-    if(d.key==='reading'||d.key==='listening'){
-      const val = scores[d.key];
-      band = val===null ? '—' : bandFromFraction(val).toFixed(1);
-      statusText = val===null ? 'Not attempted' : Math.round(val*5)+' / 5 correct';
-      pct = val===null ? 0 : val;
-    } else {
-      band = scores[d.key] ? 'Done' : '—';
-      statusText = scores[d.key] ? 'Self-assessed' : 'Not attempted';
-      pct = scores[d.key] ? 1 : 0;
-    }
-    const c = 251, offset = c-(pct*c);
-    return `<div class="gauge-card"><div class="label">${d.label}</div>
-      <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="#E1E4E8" stroke-width="8"/>
-      <circle cx="50" cy="50" r="40" fill="none" stroke="#C79A3E" stroke-width="8" stroke-dasharray="${c}" stroke-dashoffset="${offset}" stroke-linecap="round" transform="rotate(-90 50 50)"/></svg>
-      <div class="band mono">${band}</div><div class="status">${statusText}</div></div>`;
-  }).join('');
-}
-renderGauges();
+// drills
+let di=0;const esc=s=>s.replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+function hl(t,ph){let h=esc(t);ph.forEach(p=>{h=h.replace(esc(p),"<mark>$&</mark>")});return h}
+function drill(){const d=DR[di];$("d6").textContent=d[0];$("dmine").value="";$("dans").style.display="none";$("dout").classList.remove("on");
+ const ph=d[3].split(", ");$("d7").innerHTML=hl(d[1],ph);$("d8").innerHTML=hl(d[2],ph);$("dnote").textContent="Collocations to steal: "+d[3]+"."}
+$("dshow").onclick=()=>$("dans").style.display="block";
+$("dnext").onclick=()=>{di=(di+1)%DR.length;drill()};
+$("dchk").onclick=()=>{const m=$("dmine").value.trim();if(!m){$("dmine").focus();return}
+ exam("Task: the candidate upgraded a Band 6 sentence. Judge only their rewrite. Say which band it sounds like, what is natural, what sounds unnatural, and give one Band 8 alternative. Keep it under 120 words and skip the full layout.\nOriginal: "+DR[di][0]+"\nCandidate rewrite: "+m,$("dout"),$("dchk"))};
+drill();
 
-const timers = {};
-function toggleTimer(key){
-  if(timers[key] && timers[key].running){
-    clearInterval(timers[key].interval); timers[key].running=false;
-    document.getElementById(key+'TimerBtn').textContent='Resume'; return;
-  }
-  const totalSeconds = key==='read' ? 8*60 : 40*60;
-  if(!timers[key]) timers[key] = {remaining:totalSeconds, running:false, interval:null};
-  timers[key].running = true;
-  document.getElementById(key+'TimerBtn').textContent='Pause';
-  timers[key].interval = setInterval(()=>{
-    timers[key].remaining--;
-    const el = document.getElementById(key+'Time');
-    const m = String(Math.floor(timers[key].remaining/60)).padStart(2,'0');
-    const s = String(timers[key].remaining%60).padStart(2,'0');
-    el.textContent = m+':'+s;
-    if(timers[key].remaining<=60) el.classList.add('warn');
-    if(timers[key].remaining<=0){
-      clearInterval(timers[key].interval); timers[key].running=false;
-      document.getElementById(key+'TimerBtn').textContent="Time's up";
-      document.getElementById(key+'TimerBtn').disabled = true;
-    }
-  },1000);
-}
+// flashcards
+let box={};try{box=JSON.parse(ST.getItem("b8box")||"{}")}catch(e){}
+let ci=0,ct="All";const save=()=>{try{ST.setItem("b8box",JSON.stringify(box))}catch(e){}};
+function pick(){const all=FC.map((c,i)=>i).filter(i=>ct==="All"||(TP[FC[i][0]]||"General")===ct);if(!all.length){$("cp").textContent="No cards in this topic yet. Add your own below.";$("cm").style.display="none";return}const lo=Math.min(...all.map(i=>box[FC[i][0]]||0));const pool=all.filter(i=>(box[FC[i][0]]||0)<=lo+(Math.random()<.3?1:0)&&i!==ci);ci=(pool.length?pool:all)[Math.floor(Math.random()*(pool.length||all.length))];
+ $("cp").textContent=FC[ci][0];$("ctext").value="";$("cout").classList.remove("on");$("cm").style.display="none";$("cm").textContent=FC[ci][1];$("cflip").textContent="Show meaning";
+ $("cprog").textContent=FC.filter(c=>(box[c[0]]||0)>=3).length+" of "+FC.length+" phrases learned"}
+$("cflip").onclick=()=>{$("cm").style.display="block";$("cflip").textContent="Meaning shown"};
+$("cagain").onclick=()=>{box[FC[ci][0]]=0;save();pick()};
+$("cgot").onclick=()=>{const k=FC[ci][0];box[k]=Math.min((box[k]||0)+1,4);save();pick()};
+$("cscore").onclick=()=>{const t=$("ctext").value.trim();if(t.split(/\s+/).length<5){$("ctext").focus();$("cout").classList.add("on");$("cout").textContent="Write a full sentence (at least 5 words) using the phrase.";return}
+ exam("Task: the candidate must use the target phrase naturally in their own sentence. Reply in under 110 words, plain text, no markdown, no em dashes. Layout: Band for this sentence (0.5 steps, as it would be judged for Lexical Resource and Grammar); Phrase use (correct, natural, or forced, and say if the target phrase is missing; other word forms like alleviated are fine); Grammar fixes if any; one Band 8 version of their idea using the target phrase.\nTarget phrase: "+FC[ci][0]+" (meaning: "+FC[ci][1]+")\nCandidate sentence: "+t,$("cout"),$("cscore"))};
+pick();
 
-/* ================= READING BANK ================= */
-const readingBank = {
-  easy:[
-    { title:'Why Cities Are Planting More Trees',
-      paras:[
-        "Across the world, city governments are planting far more trees than they did twenty years ago, and the reasons go beyond making streets look pleasant. A single mature tree can lower the temperature of a nearby pavement by several degrees simply by blocking direct sunlight, which matters more each year as summers grow hotter. Trees also filter dust and traffic fumes out of the air, and some studies suggest that streets lined with trees have noticeably lower levels of particle pollution than similar streets without them.",
-        "Planting trees is not free, however. Young trees need regular watering for the first few years, and their roots can sometimes crack pavements or block drainage pipes if placed carelessly. For this reason, many cities now involve local residents in choosing where new trees go, since people who live on a street are often the first to notice a blocked drain or a leaning branch. In several cities, community groups have taken over the watering of new trees entirely, reducing the cost to the local council.",
-        "Despite these challenges, most city planners agree that the benefits of urban trees clearly outweigh the difficulties, and tree-planting programmes continue to expand each year."
-      ],
-      qs:[
-        {text:"What is one way a mature tree affects a nearby pavement?", options:["It waters it automatically","It lowers its temperature by blocking sunlight","It strengthens it against cracking","It cleans it of dust mechanically"], correct:1},
-        {text:"True, False, or Not Given: Streets with trees generally have lower particle pollution than streets without them.", options:["True","False","Not Given"], correct:0},
-        {text:"True, False, or Not Given: Councils are legally required to consult residents about tree placement.", options:["True","False","Not Given"], correct:2},
-        {text:"According to the passage, who sometimes takes over watering new trees?", options:["The national government","Private companies","Community groups","The nursery that grew the tree"], correct:2},
-        {text:"True, False, or Not Given: Most city planners think the difficulties of planting trees outweigh the benefits.", options:["True","False","Not Given"], correct:1}
-      ]
-    },
-    { title:'The Rise of Community Gardens',
-      paras:[
-        "In many neighbourhoods, small unused plots of land are being turned into community gardens, where residents grow vegetables, herbs, and flowers together rather than alone. Unlike a private garden, a community garden is usually shared: one person might look after the tomatoes while a neighbour waters the beans, and the harvest is often divided among everyone who helped.",
-        "Interest in these gardens grew quickly after food prices rose sharply in several countries, and many people started looking for cheaper ways to eat fresh vegetables. Local councils frequently support the gardens by providing the land for free, although the tools, seeds, and fencing are usually paid for by the gardeners themselves through small membership fees.",
-        "Community gardens are not only about food. Organisers report that the gardens often become a place where elderly residents and younger families meet and talk regularly, something that did not happen as often before the garden existed. Because of this social benefit, some housing developers have begun including a community garden in the design of new apartment buildings from the very start."
-      ],
-      qs:[
-        {text:"True, False, or Not Given: In a community garden, the harvest is usually kept only by the person who planted a particular vegetable.", options:["True","False","Not Given"], correct:1},
-        {text:"Why did interest in community gardens increase, according to the passage?", options:["New laws required them","Food prices rose","Land became free everywhere","Farmers stopped selling vegetables"], correct:1},
-        {text:"True, False, or Not Given: Councils usually pay for the seeds and tools used in community gardens.", options:["True","False","Not Given"], correct:1},
-        {text:"What social outcome do organisers report?", options:["Increased arguments between neighbours","Elderly and younger residents meeting more often","Reduced interest from families","Complaints from developers"], correct:1},
-        {text:"True, False, or Not Given: All new apartment buildings are legally required to include a community garden.", options:["True","False","Not Given"], correct:2}
-      ]
-    }
-  ],
-  medium:[
-    { title:'The Silent Language of Octopuses',
-      paras:[
-        "Unlike most animals that rely on sound or scent to communicate, the octopus speaks almost entirely through its skin. Thousands of pigment-filled cells called chromatophores sit beneath its surface, each one connected to a tiny muscle that can stretch or relax in a fraction of a second. By expanding some cells and hiding others, an octopus can shift from mottled brown to near-white, or throw stripes and spots across its body, all without moving a muscle in the way we would recognise as expression.",
-        "Researchers once assumed this skill was used only for camouflage, and hiding from predators is certainly one purpose. But recent studies suggest something more layered is happening. Divers have recorded octopuses producing distinct patterns during encounters with other octopuses, patterns that do not match anything in their usual camouflage repertoire. Some scientists now argue that these displays function as a kind of social signal, even though octopuses are largely solitary animals with no evolutionary history of complex social life.",
-        "What makes the octopus especially interesting to neuroscientists is that this entire process appears to run with only limited involvement from the brain. A large share of an octopus's neurons live not in its head but distributed along its eight arms, meaning each arm can sense, react, and even adjust colour in a local patch of skin somewhat independently."
-      ],
-      qs:[
-        {text:"According to the passage, what is chromatophores' main physical function?", options:["They release scent signals used to communicate.","They are pigment cells linked to muscles that change skin colour.","They allow the octopus to hear vibrations in water.","They store food for the octopus during winter."], correct:1},
-        {text:"True, False, or Not Given: Scientists originally believed skin-colour change was used only for camouflage.", options:["True","False","Not Given"], correct:0},
-        {text:"True, False, or Not Given: Octopuses have been observed using unique colour patterns specifically when meeting other octopuses.", options:["True","False","Not Given"], correct:0},
-        {text:"True, False, or Not Given: Octopuses are known to live in large, complex social groups.", options:["True","False","Not Given"], correct:1},
-        {text:"Where does a large portion of an octopus's neurons reside, according to the passage?", options:["In its eyes","In its central brain only","Distributed along its eight arms","In its skin cells"], correct:2}
-      ]
-    },
-    { title:"The Science of Sleep and the Body's Clock",
-      paras:[
-        "Every cell in the human body appears to follow a roughly 24-hour rhythm, known as the circadian rhythm, which is coordinated by a small cluster of neurons in the brain called the suprachiasmatic nucleus. This internal clock does not simply respond to darkness and light; it runs on its own even in constant darkness, though it drifts slightly without daily light exposure to reset it.",
-        "One of the clearest signs of this rhythm is the release of melatonin, a hormone that rises in the evening and helps prepare the body for sleep. Artificial light, particularly the blue light emitted by phone and computer screens, can suppress melatonin production, which is why many sleep researchers recommend reducing screen use for an hour or two before bed.",
-        "Shift workers, who often sleep during the day and work through the night, provide researchers with a natural experiment in what happens when this rhythm is disrupted. Long-term shift workers show higher rates of several health problems, including digestive issues and difficulty concentrating. However, not everyone is affected equally; some people, sometimes called 'night owls', naturally have a rhythm shifted later than average, and appear to cope with night shifts somewhat better."
-      ],
-      qs:[
-        {text:"What is the suprachiasmatic nucleus?", options:["A hormone released at night","A cluster of neurons that coordinates the body's internal clock","A type of blue light","A sleep disorder"], correct:1},
-        {text:"True, False, or Not Given: The circadian rhythm stops completely without daily exposure to light.", options:["True","False","Not Given"], correct:1},
-        {text:"True, False, or Not Given: Blue light from screens can reduce melatonin production.", options:["True","False","Not Given"], correct:0},
-        {text:"What do long-term shift workers show higher rates of, according to the passage?", options:["Better concentration","Digestive issues and concentration difficulties","Improved chronic health","Melatonin production"], correct:1},
-        {text:"True, False, or Not Given: All people are affected equally by disrupted circadian rhythms.", options:["True","False","Not Given"], correct:1}
-      ]
-    }
-  ],
-  hard:[
-    { title:'Nudge Theory and the Architecture of Choice',
-      paras:[
-        "In the early 2000s, a growing number of economists began to challenge a long-standing assumption in their field: that people, given information, make rational, self-interested decisions. Behavioural economists pointed out that people are heavily influenced not just by the options available to them, but by how those options are presented, an idea that came to be known as 'nudge theory'. A nudge is any small change to the way a choice is framed that predictably alters behaviour without removing any option or changing the underlying incentives.",
-        "Perhaps the most cited example involves organ donation. In countries where citizens must actively opt in to become organ donors, registration rates are typically low, often below 15%. In countries where citizens are automatically registered unless they actively opt out, registration rates frequently exceed 90%, even though the actual choice available is identical in both systems. Advocates argue that this default effect reveals that most people simply accept whatever option requires the least effort, regardless of their underlying preference.",
-        "Critics, however, raise a more uncomfortable question: who decides what counts as a beneficial outcome, and is it appropriate for a government to exploit a known psychological bias, even for a goal most people would endorse? Some philosophers argue that because nudges work precisely by bypassing careful, conscious reasoning, they sit uneasily with the idea of individual autonomy. This tension, between effectiveness and respect for independent judgement, remains largely unresolved."
-      ],
-      qs:[
-        {text:"According to the passage, what is a 'nudge'?", options:["A law that removes choices","A change in underlying incentives","A change in how a choice is presented that alters behaviour","A type of tax"], correct:2},
-        {text:"True, False, or Not Given: The actual choice available to citizens is different between opt-in and opt-out organ donation systems.", options:["True","False","Not Given"], correct:1},
-        {text:"What do advocates of nudge theory say the default effect reveals?", options:["People carefully weigh every option","People tend to accept whatever requires least effort","People always prefer to opt out","People distrust government forms"], correct:1},
-        {text:"True, False, or Not Given: All critics of nudge theory believe it removes people's freedom to choose.", options:["True","False","Not Given"], correct:2},
-        {text:"What tension does the passage say remains unresolved?", options:["Between cost and benefit","Between effectiveness and respect for independent judgement","Between opt-in and opt-out","Between governments and economists"], correct:1}
-      ]
-    },
-    { title:'Epigenetics: Beyond the Genetic Code',
-      paras:[
-        "For much of the twentieth century, genetics operated on a simple premise: an organism's DNA sequence, fixed at conception, determined which traits were possible, and little else mattered. Over the past three decades, however, a field called epigenetics has complicated this picture considerably. Epigenetics examines chemical modifications that attach to DNA, most commonly through a process called methylation, which do not alter the underlying genetic sequence itself but instead influence whether a particular gene is switched on or off.",
-        "Crucially, these modifications can be triggered by factors entirely external to the genome, including diet, stress, and exposure to certain chemicals. A widely cited set of studies followed the descendants of populations that experienced severe famine, and found altered patterns of gene expression in children and even grandchildren who had never personally experienced food scarcity themselves.",
-        "Studies of identical twins have proved particularly useful in this field. Because identical twins share an essentially identical DNA sequence at birth, any differences that emerge between them later in life cannot be explained by sequence differences alone. Researchers have found that the epigenetic markers of identical twins, nearly indistinguishable in early childhood, diverge steadily as the twins age. It is worth noting that many epigenetic effects remain controversial, particularly claims about multi-generational inheritance in humans, since isolating environmental influence from genuine hereditary transmission is methodologically difficult."
-      ],
-      qs:[
-        {text:"What does epigenetics primarily study?", options:["Changes to the DNA sequence itself","Chemical modifications that influence gene activity without changing the DNA sequence","The complete replacement of genes","Random genetic mutations"], correct:1},
-        {text:"True, False, or Not Given: Methylation changes the underlying DNA sequence.", options:["True","False","Not Given"], correct:1},
-        {text:"What did studies of famine descendants suggest?", options:["DNA sequence changes across generations","Gene expression effects may persist across generations","Famine has no lasting effect","Only the generation that experienced famine is affected"], correct:1},
-        {text:"True, False, or Not Given: Identical twins have identical epigenetic markers throughout their entire lives.", options:["True","False","Not Given"], correct:1},
-        {text:"True, False, or Not Given: The passage states that claims about multi-generational epigenetic inheritance in humans are now fully proven.", options:["True","False","Not Given"], correct:1}
-      ]
-    }
-  ]
-};
+// timers
+const fmt=s=>Math.floor(s/60)+":"+String(s%60).padStart(2,"0");
+let tm;function timer(sec,el,done){clearInterval(tm);let n=sec;el.textContent=fmt(n);tm=setInterval(()=>{n--;el.textContent=fmt(Math.max(n,0));if(n<=0){clearInterval(tm);if(done)done()}},1000)}
 
-let readState = { level:'medium', item:null };
-function setReadLevel(level){
-  readState.level = level;
-  readState.item = pickRandom(readingBank[level]);
-  document.querySelectorAll('#readLevelRow .level-btn').forEach(b=>b.classList.toggle('active', b.dataset.level===level));
-  renderReadingPassage();
-  renderReadingQuestions();
-  document.getElementById('readingResult').innerHTML = '';
-}
-function newReadingItem(){
-  readState.item = pickRandom(readingBank[readState.level]);
-  renderReadingPassage(); renderReadingQuestions();
-  document.getElementById('readingResult').innerHTML = '';
-}
-function renderReadingPassage(){
-  const box = document.getElementById('readingPassageBox');
-  box.innerHTML = `<div class="level-row" style="margin-bottom:10px;"><span class="topic-label">Passage: ${readState.item.title}</span><button class="refresh-btn" onclick="newReadingItem()">New passage ↻</button></div>
-    <div class="passage">${readState.item.paras.map(p=>`<p>${p}</p>`).join('')}</div>`;
-}
-function renderReadingQuestions(){
-  const container = document.getElementById('readingQuestions');
-  const shuffledQs = readState.item.qs.map(q=>{
-    const correctText = q.options[q.correct];
-    const opts = shuffle(q.options);
-    return {text:q.text, options:opts, correctIndex:opts.indexOf(correctText)};
-  });
-  container.dataset.answers = JSON.stringify(shuffledQs.map(q=>q.correctIndex));
-  container.innerHTML = shuffledQs.map((q,i)=>{
-    const opts = q.options.map((opt,j)=>{
-      const letter = String.fromCharCode(65+j);
-      return `<label class="omr-option"><input type="radio" name="read${i}" value="${j}"><span class="omr-bubble"></span><span class="omr-letter">${letter}</span><span class="opt-text">${opt}</span></label>`;
-    }).join('');
-    return `<div class="q-block" id="readBlock${i}"><div class="q-text"><span class="q-num">${i+1}</span>${q.text}</div><div class="omr-row">${opts}</div></div>`;
-  }).join('') + '<button class="primary-btn" onclick="gradeReading()">Submit answers</button>';
-  container._answerKey = shuffledQs;
-}
-function gradeReading(){
-  const container = document.getElementById('readingQuestions');
-  const qs = container._answerKey;
-  let correctCount = 0;
-  qs.forEach((q,i)=>{
-    const selected = document.querySelector(`input[name="read${i}"]:checked`);
-    const block = document.getElementById('readBlock'+i);
-    const oldFb = block.querySelector('.feedback'); if(oldFb) oldFb.remove();
-    block.classList.remove('correct','incorrect');
-    const fb = document.createElement('div'); fb.className='feedback';
-    if(selected && parseInt(selected.value)===q.correctIndex){
-      correctCount++; block.classList.add('correct'); fb.classList.add('ok'); fb.textContent='Correct.';
-    } else {
-      block.classList.add('incorrect'); fb.classList.add('no');
-      fb.textContent = `Correct answer: ${q.options[q.correctIndex]}`;
-    }
-    block.appendChild(fb);
-  });
-  scores.reading = correctCount/qs.length;
-  const band = bandFromFraction(scores.reading);
-  document.getElementById('readingResult').innerHTML = `<div class="score-banner"><div><div class="lab">Score</div><div class="big mono">${correctCount} / ${qs.length}</div></div><div><div class="lab">Estimated band</div><div class="big mono">${band.toFixed(1)}</div></div></div>`;
-  renderGauges();
-}
-function buildLevelRow(elId, onPick){
-  const row = document.getElementById(elId);
-  row.innerHTML = ['easy','medium','hard'].map(lv=>{
-    const labels = {easy:'Band 5-6',medium:'Band 6-7',hard:'Band 7-8+'};
-    return `<button class="level-btn" data-level="${lv}" onclick="${onPick}('${lv}')">${labels[lv]}</button>`;
-  }).join('');
-}
-buildLevelRow('readLevelRow','setReadLevel');
-setReadLevel('medium');
+// speaking
+let si=0,sp=2;const SB=()=>sp===2?CU:sp===1?P1:P3;function cue(){$("scue").textContent=SB()[si%SB().length];$("sprep").style.display=sp===2?"":"none";$("stalk").textContent=sp===2?"2 min speak":sp===1?"30 sec answer":"60 sec answer";$("stext").value="";$("sout").classList.remove("on");$("stime").textContent=sp===1?"0:30":"1:00"}
+$("snew").onclick=()=>{si=(si+1)%SB().length;clearInterval(tm);cue()};
+$("sprep").onclick=()=>timer(60,$("stime"));
+$("stalk").onclick=()=>timer(sp===2?120:sp===1?30:60,$("stime"));
+$("sas").onclick=()=>{const t=$("stext").value.trim();if(t.split(/\s+/).length<30){$("sout").classList.add("on");$("sout").textContent="Add at least 30 words of what you said so the examiner has something to assess.";return}
+ exam("IELTS Speaking Part "+sp+" transcript. "+(sp===2?"Judge one long turn of about 2 minutes.":"Judge a short answer. A Part "+sp+" answer should be developed: "+(sp===1?"2 to 3 sentences with a reason or example.":"opinion, reason, example, and a balanced or hypothetical angle."))+"\nQuestion:\n"+SB()[si%SB().length]+"\n\nTranscript:\n"+t+(spk?"\n\nTiming from the recording: "+spk+". The text came from speech recognition, so pronunciation errors may have been auto-corrected.":"")+SC,$("sout"),$("sas"),"Speaking P"+sp)};
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;let rec,recOn=false,t0=0,spk="";
+$("smic").onclick=()=>{
+ if(!SR){$("sstat").textContent="This browser has no speech recognition. Use Chrome or Edge, or type your answer.";return}
+ if(recOn){rec.stop();return}
+ const base=$("stext").value.trim()?$("stext").value.trim()+" ":"";let fin="",bad=false;spk="";
+ rec=new SR();rec.lang="en-US";rec.continuous=true;rec.interimResults=true;
+ rec.onresult=e=>{let it="";for(let i=e.resultIndex;i<e.results.length;i++){const r=e.results[i];if(r.isFinal)fin+=r[0].transcript+" ";else it+=r[0].transcript}$("stext").value=base+fin+it};
+ rec.onerror=e=>{bad=true;$("sstat").textContent=(e.error==="not-allowed"||e.error==="service-not-allowed")?"Microphone is blocked here. Allow mic access for this page, or type your answer.":"Mic problem ("+e.error+"). You can type your answer instead."};
+ rec.onend=()=>{recOn=false;$("smic").textContent="Record with mic";const s=(Date.now()-t0)/1000,w=(fin.trim().match(/\S+/g)||[]).length;if(!bad&&s>5&&w>5){spk=Math.round(s)+" seconds, about "+Math.round(w/(s/60))+" words per minute";$("sstat").textContent="Recorded "+spk+". Fix any misheard words, then assess."}else if(!bad){$("sstat").textContent="Nothing was captured. Try again closer to the mic."}};
+ try{rec.start();recOn=true;t0=Date.now();$("smic").textContent="Stop recording";$("sstat").textContent="Listening..."}catch(e){$("sstat").textContent="Could not start the mic."}};
+cue();
 
-/* ================= LISTENING BANK ================= */
-const listeningBank = {
-  easy:[
-    { title:'Booking a Yoga Class', sub:'A phone call to a yoga studio · fill-in-the-blank', type:'blank',
-      script:"Hi there, thanks for calling Sunrise Yoga Studio. My name's Tom, how can I help? Great, I can definitely book you into a class. We run a beginner session every Tuesday at six thirty in the evening. The class costs eight pounds if you pay per session, or you can join as a monthly member for twenty pounds. If it's your first time, please bring your own mat, although we do have a few spares if you forget. Could I take a contact number so I can send you a confirmation text? Perfect, I'll text you the address shortly. See you Tuesday!",
-      qs:[
-        {text:"What day is the beginner class held?", accept:["tuesday"]},
-        {text:"What time does the beginner class start?", accept:["6:30pm","6:30","six thirty","18:30","6.30pm"]},
-        {text:"How much does a single session cost?", accept:["£8","8","eight pounds"]},
-        {text:"How much is monthly membership?", accept:["£20","20","twenty pounds"]},
-        {text:"What should first-timers bring?", accept:["a yoga mat","mat","yoga mat","their own mat","own mat"]}
-      ]
-    },
-    { title:'Gym Membership Enquiry', sub:'A phone call to a gym · fill-in-the-blank', type:'blank',
-      script:"Good afternoon, FitZone Gym, this is Priya speaking. Sure, I can give you our opening hours — we're open from six in the morning until eleven at night, every day of the week. Membership is thirty five pounds a month, and that includes access to all group classes. There's also a one-off joining fee of ten pounds, which covers your membership card. If you'd like to use a locker permanently, rather than the free daily ones, that's an extra five pounds a month. Our most popular class is called Power Circuit, and it runs every Thursday evening. Is there anything else you'd like to know?",
-      qs:[
-        {text:"What time does the gym open?", accept:["6am","6","six","6:00am","6.00am"]},
-        {text:"Monthly membership costs how much?", accept:["£35","35"]},
-        {text:"What is the one-off joining fee?", accept:["£10","10","ten pounds"]},
-        {text:"What is the extra monthly cost for a permanent locker?", accept:["£5","5","five pounds"]},
-        {text:"What is the name of the most popular class?", accept:["power circuit"]}
-      ]
-    }
-  ],
-  medium:[
-    { title:'Riverside Library — Membership Enquiry', sub:'A phone call · fill-in-the-blank', type:'blank',
-      script:"Good morning, thank you for calling Riverside Library membership services. My name is Claire and I'll help you register today. First, could you tell me your full name? Right, thank you. Our library is open Monday to Friday, from nine a.m. until eight p.m., and on Saturdays from ten a.m. until four p.m. We're closed on Sundays. Annual membership costs twenty five pounds for adults, but students receive a discount and pay only twelve pounds fifty. To complete your registration, please bring a photo ID and proof of address to the front desk, which is located in Room 14 on the ground floor. Once registered, you can borrow up to eight books at a time, for a period of three weeks.",
-      qs:[
-        {text:"The library is open until what time on weekdays?", accept:["8pm","8:00pm","eight pm","20:00","8 pm"]},
-        {text:"Annual membership for a student costs how much?", accept:["£12.50","12.50","12.5","£12.5","twelve pounds fifty"]},
-        {text:"Which room should visitors go to for registration?", accept:["room 14","14","room14"]},
-        {text:"How many books can a member borrow at once?", accept:["8","eight"]},
-        {text:"For how many weeks can books be borrowed?", accept:["3","three","3 weeks","three weeks"]}
-      ]
-    },
-    { title:"Doctor's Appointment Booking", sub:'A phone call to a medical centre · fill-in-the-blank', type:'blank',
-      script:"Riverside Medical Centre, good morning. I'd like to book you in with Doctor Hassan, who has an opening this Thursday at quarter past two in the afternoon. The appointment will take place in Room 7, on the first floor. There's no charge for registered patients, but if you're a temporary resident, there's a standard consultation fee of eighteen pounds. Please remember to bring your insurance card and a form of photo identification with you. If you need to cancel, please call at least twenty four hours in advance, or a small missed-appointment fee may apply.",
-      qs:[
-        {text:"Which day is the appointment?", accept:["thursday"]},
-        {text:"What time is the appointment?", accept:["2:15pm","quarter past two","14:15","2.15pm"]},
-        {text:"Which room is the appointment in?", accept:["room 7","7","room7"]},
-        {text:"What is the consultation fee for a temporary resident?", accept:["£18","18","eighteen pounds"]},
-        {text:"What should the patient bring along with photo ID?", accept:["insurance card","an insurance card"]}
-      ]
-    },
-    { title:'Community Centre — Weekly Class Schedule', sub:'A phone announcement · table completion', type:'blank',
-      script:"Welcome to the community centre information line. Let me run through this week's class schedule for you. Pottery class is held on Mondays at ten in the morning, in Studio A. Beginner Spanish runs on Wednesdays at six in the evening, in Room 12. Our most popular session, Family Yoga, takes place on Saturdays at nine in the morning, in the Main Hall. Finally, watercolour painting is on Fridays at two in the afternoon, also in Studio A. There is a small materials fee of three pounds for the pottery and watercolour classes only.",
-      visual:`<div style="overflow-x:auto;margin-bottom:16px;"><table style="width:100%;border-collapse:collapse;font-size:13.5px;">
-        <tr style="background:#16233F;color:#fff;"><th style="padding:8px 10px;text-align:left;">Class</th><th style="padding:8px 10px;text-align:left;">Day</th><th style="padding:8px 10px;text-align:left;">Time</th><th style="padding:8px 10px;text-align:left;">Room</th></tr>
-        <tr style="border-bottom:1px solid #D3D7DC;"><td style="padding:8px 10px;">Pottery</td><td style="padding:8px 10px;">Q1</td><td style="padding:8px 10px;">10am</td><td style="padding:8px 10px;">Studio A</td></tr>
-        <tr style="border-bottom:1px solid #D3D7DC;"><td style="padding:8px 10px;">Beginner Spanish</td><td style="padding:8px 10px;">Wednesday</td><td style="padding:8px 10px;">Q2</td><td style="padding:8px 10px;">Room 12</td></tr>
-        <tr style="border-bottom:1px solid #D3D7DC;"><td style="padding:8px 10px;">Family Yoga</td><td style="padding:8px 10px;">Saturday</td><td style="padding:8px 10px;">9am</td><td style="padding:8px 10px;">Q3</td></tr>
-        <tr><td style="padding:8px 10px;">Q4</td><td style="padding:8px 10px;">Friday</td><td style="padding:8px 10px;">2pm</td><td style="padding:8px 10px;">Studio A</td></tr>
-      </table></div>`,
-      qs:[
-        {text:"Q1 — What day is the pottery class held?", accept:["monday"]},
-        {text:"Q2 — What time does Beginner Spanish start?", accept:["6pm","18:00","six pm","6:00pm","6.00pm"]},
-        {text:"Q3 — Which room is Family Yoga held in?", accept:["main hall","the main hall"]},
-        {text:"Q4 — Which class is on Fridays at two in the afternoon?", accept:["watercolour painting","watercolor painting","watercolour","painting"]},
-        {text:"What is the materials fee for pottery and watercolour classes?", accept:["£3","3","three pounds"]}
-      ]
-    }
-  ],
-  hard:[
-    { title:'University Short Course Enrollment', sub:'A phone call · dense information, fill-in-the-blank', type:'blank',
-      script:"Thank you for calling the Continuing Education Office. The Introduction to Data Analysis short course begins on the fourteenth of September and runs for six consecutive weeks, meeting every Monday and Wednesday evening. Full course fees are three hundred and twenty pounds, though early registration before the thirty-first of August brings that down to two hundred and eighty pounds. Materials, including the required textbook, are not included in the fee and typically cost a further twenty-five pounds through the campus bookshop. Classes are held in the Ashworth Building, specifically room two hundred and four, and the course is capped at eighteen students. A certificate of completion is issued to anyone who attends at least eighty percent of sessions.",
-      qs:[
-        {text:"On what date does the course begin?", accept:["14th september","september 14","14 september","14/09","september 14th"]},
-        {text:"What is the discounted fee if registered before 31 August?", accept:["£280","280"]},
-        {text:"Approximately how much do course materials cost?", accept:["£25","25","twenty five pounds"]},
-        {text:"Which room are classes held in?", accept:["room 204","204","room204"]},
-        {text:"What attendance percentage is required for a certificate?", accept:["80%","80"]}
-      ]
-    },
-    { title:'Museum Guided Tour — Lecture Excerpt', sub:'A short lecture · multiple choice', type:'mcq',
-      script:"Welcome to the East Wing. The sculpture in front of you was carved from a single block of marble, a technique that was already considered old-fashioned by the time this piece was completed, since most sculptors of the period preferred to assemble smaller pieces separately. Historians believe the artist deliberately chose the older method to signal a connection to earlier traditions, rather than simply out of habit. Interestingly, X-ray analysis conducted only in the last decade revealed a small, hidden signature beneath the base, suggesting the piece was, for many years, incorrectly attributed to a different, more famous sculptor entirely. This discovery required the museum to update every public label associated with the piece, a correction that took almost two years to complete across all of its printed materials. Visitors today can still see the faint outline of the original signature if they look closely at the base, though the museum has chosen not to remove the incorrect attribution entirely from historical records, since the mistake itself is now considered part of the sculpture's own story.",
-      qs:[
-        {text:"Why do historians think the artist used the single-block technique?", options:["It was cheaper","To deliberately connect with earlier traditions","Because no other method existed","By accident"], correct:1},
-        {text:"What did X-ray analysis reveal?", options:["A hidden signature indicating the wrong sculptor had been credited","That the sculpture was a forgery","That the marble was fake","A hidden second sculpture"], correct:0},
-        {text:"How long did it take the museum to correct its materials?", options:["Two months","Two years","Twenty years","It has not been corrected"], correct:1},
-        {text:"Has the museum removed the incorrect attribution from historical records entirely?", options:["Yes, completely","No, it kept it as part of the sculpture's history","It was never recorded","Only removed from printed materials"], correct:1},
-        {text:"What technique did most sculptors of that period prefer instead?", options:["Carving from a single block","Assembling smaller pieces separately","Using bronze instead of marble","Digital scanning"], correct:1}
-      ]
-    },
-    { title:'Campus Orientation Tour', sub:"A guide's talk · map labelling (choose the correct letter)", type:'mcq',
-      script:"Welcome to Riverside University. If you're standing at the main entrance, the library is directly ahead of you, at the far end of the courtyard. The Student Union building is on your left as you face the library, just before the courtyard begins. If you turn right instead, you'll find the Science Building, which is set slightly back from the path. Behind the library, to the north, is the Sports Centre, which is the newest building on campus. Finally, the car park is located to the south of the main entrance, behind where you're standing now.",
-      visual:`<svg viewBox="0 0 300 300" style="width:100%;max-width:280px;display:block;margin:0 auto 18px;background:#FAFAF8;border:1px solid #D3D7DC;border-radius:8px;">
-        <text x="15" y="24" font-size="10" fill="#5C6470">N ↑</text>
-        <circle cx="150" cy="45" r="16" fill="#16233F"/><text x="150" y="50" font-size="13" fill="#fff" text-anchor="middle">D</text>
-        <circle cx="150" cy="100" r="16" fill="#C79A3E"/><text x="150" y="105" font-size="13" fill="#3A2C08" text-anchor="middle">A</text>
-        <circle cx="70" cy="150" r="16" fill="#2F7D53"/><text x="70" y="155" font-size="13" fill="#fff" text-anchor="middle">B</text>
-        <circle cx="230" cy="150" r="16" fill="#B23B3B"/><text x="230" y="155" font-size="13" fill="#fff" text-anchor="middle">C</text>
-        <rect x="130" y="190" width="40" height="30" fill="none" stroke="#5C6470" stroke-width="1.5"/>
-        <text x="150" y="209" font-size="9" fill="#5C6470" text-anchor="middle">Courtyard</text>
-        <circle cx="150" cy="240" r="6" fill="#3B4A68"/><text x="150" y="258" font-size="10" fill="#3B4A68" text-anchor="middle">Entrance</text>
-        <circle cx="150" cy="280" r="16" fill="#8A9199"/><text x="150" y="285" font-size="13" fill="#fff" text-anchor="middle">E</text>
-      </svg>`,
-      qs:[
-        {text:"Where is the Library?", options:["A","B","C","D","E"], correct:0},
-        {text:"Where is the Student Union building?", options:["A","B","C","D","E"], correct:1},
-        {text:"Where is the Science Building?", options:["A","B","C","D","E"], correct:2},
-        {text:"Where is the Sports Centre?", options:["A","B","C","D","E"], correct:3},
-        {text:"Where is the car park?", options:["A","B","C","D","E"], correct:4}
-      ]
-    }
-  ]
-};
-
-let listenState = { level:'medium', item:null };
-function setListenLevel(level){
-  listenState.level = level;
-  listenState.item = pickRandom(listeningBank[level]);
-  document.querySelectorAll('#listenLevelRow .level-btn').forEach(b=>b.classList.toggle('active', b.dataset.level===level));
-  renderListeningMeta(); renderListeningQuestions();
-  document.getElementById('listeningResult').innerHTML = '';
+// writing
+let wi=0,wk="t2";const WB=()=>wk==="t2"?WQ:wk==="a"?WA:WG,WM={t2:["Task 2",40,250],a:["Academic Task 1",20,150],g:["General Training Task 1 letter",20,150]};function wq(){$("wcue").textContent=WB()[wi%WB().length];$("wtime").textContent=WM[wk][1]+":00";clearInterval(tm);$("wtext").value="";$("wcount").textContent="0 words";$("wout").classList.remove("on")}
+$("wnew").onclick=()=>{wi=(wi+1)%WB().length;wq()};
+$("wtimer").onclick=()=>timer(WM[wk][1]*60,$("wtime"));
+$("wtext").oninput=()=>{const n=($("wtext").value.trim().match(/\S+/g)||[]).length;$("wcount").textContent=n+" words"+(n<WM[wk][2]?" (aim for "+WM[wk][2]+"+)":"")};
+$("was").onclick=()=>{const t=$("wtext").value.trim();if(t.split(/\s+/).length<60){$("wout").classList.add("on");$("wout").textContent="Write at least 60 words so the examiner can assess your essay.";return}
+ exam("IELTS Writing "+WM[wk][0]+". "+(wk==="t2"?"Criteria: Task Response, ":wk==="a"?"Criteria: Task Achievement (check for a clear overview, key features, accurate data, and no personal opinion), ":"Criteria: Task Achievement (check purpose, all three bullet points covered, and correct tone and register), ")+"Coherence and Cohesion, Lexical Resource, Grammatical Range and Accuracy. Minimum words: "+WM[wk][2]+".\nQuestion: "+WB()[wi%WB().length]+"\n\nResponse:\n"+t+SC,$("wout"),$("was"),"Writing "+(wk==="t2"?"T2":wk==="a"?"T1A":"T1G"))};
+const P1=["Do you work or are you a student?","What do you like most about your hometown?","How often do you use public transport?","Do you enjoy cooking?","What do you usually do on weekends?","Do you prefer reading books or watching films?","How do you keep in touch with friends?","Is there any kind of weather you dislike?"];
+const P3=["Why do you think some people prefer living in cities rather than the countryside?","How has technology changed the way people communicate?","Do you think young people today are under more pressure than previous generations? Why?","What can governments do to encourage healthy lifestyles?","Is it better to learn from a teacher or to study alone? Why?","How might tourism change in the future?","Why do some people find it hard to balance work and family?","Should people be paid more for jobs that are dangerous?"];
+const WA=["The table shows the percentage of households with internet access in three countries.\n\nCountry: 2000 / 2010 / 2020\nPhilippines: 5 / 30 / 70\nJapan: 46 / 78 / 93\nBrazil: 9 / 40 / 81\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant.","The line graph shows average monthly rainfall (mm) in two cities over a year.\n\nCity A: Jan 30, Mar 55, May 120, Jul 210, Sep 150, Nov 60\nCity B: Jan 90, Mar 85, May 70, Jul 40, Sep 60, Nov 95\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant.","The pie charts show how a household spent its income in 2000 and 2020.\n\n2000: Housing 35%, Food 30%, Transport 10%, Education 10%, Leisure 5%, Other 10%\n2020: Housing 40%, Food 18%, Transport 15%, Education 12%, Leisure 10%, Other 5%\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant."];
+const WG=["You recently stayed at a hotel and had a problem with your room. Write a letter to the manager. In your letter:\ndescribe the problem\nexplain how it affected your stay\nsay what you want the hotel to do","A friend has invited you to stay at their home for a week. Write a letter to your friend. In your letter:\nthank your friend\nsay when you can come\nsuggest something you could do together","You want to join a local evening class. Write a letter to the college. In your letter:\nsay which class you want to join\nexplain why you want to join it\nask about the cost and schedule"];
+const SC=" Finish with three last lines, each on its own line, in exactly these forms. Line 1: SCORES: followed by criterion codes and O for overall, half bands only, for example SCORES: TR=6.5 CC=6 LR=6 GRA=6 O=6 for writing (TR means Task Response or Task Achievement) or SCORES: FC=6 LR=6.5 GRA=6 O=6 for speaking. Line 2: PHRASES: five natural collocations or phrases on this topic that would lift this candidate, separated by | . Line 3: MISTAKES: up to 4 real errors copied from the candidate text, each as Category=wrong phrase => corrected phrase, separated by | , where Category is one of Articles, Tenses, Agreement, Plurals, Prepositions, Word choice, Linking words, Spelling, Sentence structure, Punctuation.";
+const CR={TR:"Task response or achievement",CC:"Coherence and cohesion",FC:"Fluency and coherence",LR:"Lexical resource",GRA:"Grammar range and accuracy",O:"Overall"};
+let H=[];try{H=JSON.parse(ST.getItem("b8hist")||"[]")}catch(e){}
+const clean=t=>t.replace(/\s*(SCORES|PHRASES|MISTAKES):[^\n]*/g,"").trim();
+function log(kind,text){const m=text.match(/SCORES:([^\n]*)/);if(!m)return;const sc={};m[1].replace(/([A-Z]+)=([0-9](?:\.5)?)/g,(a,k,v)=>{sc[k]=+v});if(!sc.O)return;H.push({d:Date.now(),k:kind,s:sc});H=H.slice(-60);try{ST.setItem("b8hist",JSON.stringify(H))}catch(e){}prog()}
+function prog(){const b=$("pbars");b.textContent="";const last=H.slice(-5);let weak=null,wv=99;
+ Object.keys(CR).forEach(k=>{const v=last.map(h=>h.s[k]).filter(x=>x!=null);if(!v.length)return;const a=v.reduce((x,y)=>x+y,0)/v.length;if(k!=="O"&&a<wv){wv=a;weak=CR[k]}
+  const r=document.createElement("div");r.className="bar";const l=document.createElement("b");l.textContent=CR[k];const t=document.createElement("div");t.className="trk";const f=document.createElement("div");f.className="fil";f.style.width=a/9*100+"%";const g=document.createElement("div");g.className="tgt";t.append(f,g);const n=document.createElement("span");n.textContent=a.toFixed(1);r.append(l,t,n);b.append(r)});
+ const p=$("plist");p.style.whiteSpace="pre-wrap";p.textContent=H.length?(weak?"Weakest area right now: "+weak+". Aim your next practice there. The red line marks Band 8.\n\n":"")+H.slice(-8).reverse().map(h=>new Date(h.d).toLocaleDateString()+"   "+h.k+"   overall "+h.s.O).join("\n"):"No assessed attempts yet. Finish a Speaking or Writing assessment and it will appear here."}
+$("pclr").onclick=()=>{H=[];RS=[];try{ST.removeItem("b8hist");ST.removeItem("b8raw")}catch(e){}prog();showraw()};
+function seg(id,items,start,fn){const el=$(id);items.forEach(([v,t])=>{const b=document.createElement("button");b.textContent=t;b.className=v===start?"on":"";b.onclick=()=>{[...el.children].forEach(c=>c.classList.remove("on"));b.classList.add("on");fn(v)};el.append(b)})}
+seg("ssel",[[1,"Part 1"],[2,"Part 2"],[3,"Part 3"]],2,v=>{sp=v;si=0;clearInterval(tm);cue()});
+seg("wsel",[["t2","Task 2"],["a","Task 1 Academic"],["g","Task 1 General"]],"t2",v=>{wk=v;wi=0;wq()});
+const n=s=>s.toLowerCase().replace(/[^a-z0-9]/g,"");
+const RG=[["True, False, Not Given","True means the text says the same thing. False means the text says the opposite. Not Given means the text says nothing about it. Never use your own knowledge. Watch absolute words (all, only, never, fully) and changed numbers or time words. The most common mistake is marking Not Given as False."],["Matching Headings","Read the headings first and underline the key idea of each. Then read the first and last sentences of each paragraph to find its main idea. A heading must cover the WHOLE paragraph, not one detail. Cross out headings as you use them. There are always extra headings, and they often reuse words from the text to trick you."],["Matching Information","Find which paragraph contains a given detail. The wording will be paraphrased, so look for meaning, not matching words. A paragraph can be used more than once unless told otherwise."],["Summary and sentence completion","Check the word limit (for example NO MORE THAN TWO WORDS). Predict the word type (noun, verb, number) before you search. Copy spelling exactly from the text."],["Multiple choice","Read the question, find the paragraph, then compare all the options. Wrong options often use words from the text but change the meaning."],["Time and strategy","Spend about 20 minutes per passage and no more than 90 seconds stuck on one question. Guess every blank, because there is no penalty. Skim the structure first (2 minutes). Answers usually follow text order, except Matching Headings."],["From Band 7 to 8","Practise paraphrase: a patchwork of plants that bloom means a variety of flowers. Learn synonym sets for increase, decrease, cause and result. Read one long article a day and write a one line main idea for each paragraph."]];
+const LG=[["The four sections","Section 1: an everyday conversation (a booking or enquiry). Section 2: a monologue about local matters. Section 3: a discussion between students and a tutor. Section 4: an academic lecture. Difficulty rises each section, and you hear the audio once."],["Before the audio","Use the reading time to underline key words and predict the answer type: a number, a name, a place or a date. Check the word limit."],["While listening","Answers come in the same order as the questions. Speakers often correct themselves (seven thirty, no sorry, seven fifteen), so write the final version. If you miss one, move on at once so you do not lose the next."],["Spelling and details","Spelling counts. Watch plural -s, thirteen versus thirty, and names spelled letter by letter. Copy numbers and units exactly as the question asks."],["Checking","Check that each answer fits the sentence grammatically (singular or plural) and respects the word limit."],["From Band 7 to 8","Train with many accents: British, Australian, Canadian, American, New Zealand. Do dictation: listen to 30 seconds, write what you heard, then compare with the transcript. Listen to podcasts and write a 3 sentence summary."]];
+const R=[{t:"The Return of the Urban Bee",p:["Cities were once thought to be hostile places for pollinators, yet recent surveys in London, Paris and Melbourne have found a surprising variety of bee species living on rooftops and in small parks. In London alone, researchers recorded more than 250 species, many more than in nearby farmland.","Part of the explanation lies in gardens. Farmland tends to offer vast fields of a single crop that flower briefly, whereas city gardens, balconies and window boxes provide a patchwork of plants that bloom from early spring to late autumn. Warmer city temperatures also extend the season.","However, urban bees face difficulties of their own. Concrete surfaces leave few places to nest, and widespread pesticide use in private gardens can poison colonies. Some scientists also warn that the popularity of rooftop honeybee hives may harm wild species by competing with them for food.","As a result, several councils now plant wildflower strips along roads and offer grants for bee hotels. Early evidence suggests these low-cost measures work, although long-term monitoring is still needed before their value can be confirmed."],h:["The economic value of honey production","Obstacles that city bees must overcome","Unexpected variety of bees in built-up areas","A decline in bee numbers across the countryside","Practical steps taken by local authorities","Why gardens suit bees better than fields"],ha:[2,5,1,4],q:[["More bee species were found in London than on nearby farmland.",0],["City gardens usually contain only a few types of plant.",1],["Keeping honeybees on rooftops has been banned in some cities.",2],["The success of bee hotels has been fully proven.",1]]},{t:"A Four-Day Working Week",p:["In 2022 a large trial in the United Kingdom asked 61 companies to cut the working week to four days without reducing pay. Participants included a fish and chip shop, a software firm and a charity, which made the results harder to dismiss as relevant to only one industry.","After six months, most employers reported that productivity had stayed the same or improved. Workers reported lower stress and fewer sick days, and resignations fell sharply. Most of the firms said they planned to continue with the shorter week.","Critics, however, point out that the companies volunteered and may have been more flexible than average. Jobs that require constant presence, such as hospital nursing, were hardly represented, so it is unclear whether the model could work there without hiring more staff.","Supporters nevertheless argue that the trial shows many working hours are wasted on unnecessary meetings and slow processes. They suggest that the real question is not whether to shorten the week, but how to redesign work so that the shorter week succeeds."],h:["Government plans to change employment law","Doubts about how representative the trial was","A varied group of employers takes part","Calls to rethink how working time is used","Why workers prefer longer holidays","Evidence that productivity did not suffer"],ha:[2,5,1,3],q:[["All of the companies in the trial worked in the same industry.",1],["Employees took fewer days off sick during the trial.",0],["Hospital nurses were widely included in the trial.",1],["Most of the participating companies were based in London.",2]]}];
+const L=[{s:"Good morning, Sunrise Language Centre. Hello, I’d like to join the evening conversation class. Certainly. Can I take your surname? Yes, it’s S, A, N, T, O, S. And your phone number? It’s 0 9 1 7, 5 5 5, 3 2 1 4. Which day would you prefer, Tuesday or Thursday? Thursday works better, although I could manage Wednesday if there is no space. Thursday is fine. The class starts at seven thirty, no sorry, seven fifteen, and the fee is one hundred and ninety pesos per month.",q:[{q:"Surname",a:["santos"],d:"Santos"},{q:"Last four digits of the phone number",a:["3214"],d:"3214"},{q:"Day of the class",o:["Tuesday","Wednesday","Thursday"],a:2},{q:"Start time",a:["715","715pm","sevenfifteen","quarterpastseven"],d:"7:15"},{q:"Monthly fee in pesos",a:["190","onehundredandninety"],d:"190"}]},{s:"So, Daniel, how is your research project going? Well, I originally planned to survey two hundred students, but I will only manage one hundred and fifty, because the library closes for repairs in March. I see. Have you decided on your method? Yes, interviews seemed too time consuming, so I am using an online questionnaire instead. Good choice. The main thing is to submit the first draft by the twelfth of April. And remember to include a reference list. Oh, and book the presentation room early, because the one in the Science Building is always busy.",q:[{q:"Number of students Daniel will survey",a:["150","onehundredandfifty","onehundredfifty"],d:"150"},{q:"Why can he survey fewer students?",o:["The library closes for repairs","He lost some of his data","His tutor advised it"],a:0},{q:"Research method chosen",o:["Interviews","Online questionnaire","Observation"],a:1},{q:"Deadline for the first draft",a:["12april","12thapril","12thofapril","april12","april12th"],d:"12 April"},{q:"Building with the presentation room",a:["sciencebuilding","science","thesciencebuilding"],d:"Science Building"}]}];
+function guide(el,a){a.forEach(([t,x])=>{const d=document.createElement("details"),s=document.createElement("summary"),p=document.createElement("p");s.className="lab";s.textContent=t;p.textContent=x;d.append(s,p);el.append(d)})}
+function mk(box,items,off){box.textContent="";items.forEach((it,i)=>{const d=document.createElement("div");d.className="q";const l=document.createElement("span");l.textContent=(i+1+off)+". "+it.q;let el;if(it.o){el=document.createElement("select");[["","Choose..."]].concat(it.o.map((x,j)=>[j,x])).forEach(([v,x])=>{const o=document.createElement("option");o.value=v;o.textContent=x;el.append(o)})}else{el=document.createElement("input");el.type="text";el.autocomplete="off"}el.setAttribute("aria-label",it.q);const m=document.createElement("span");m.className="mk";d.append(l,el,m);it.el=el;it.m=m;box.append(d)})}
+function chk(items){let s=0;const rep=[];items.forEach(it=>{const v=it.el.value.trim();const ok=it.o?(v!==""&&+v===it.a):it.a.includes(n(v));if(ok)s++;const right=it.o?it.o[it.a]:(it.d||it.a[0]);it.m.className="mk "+(ok?"ok":"no");it.m.textContent=ok?"Correct":"Incorrect. Answer: "+right;rep.push(it.q+" | candidate: "+(it.o?(v===""?"none":it.o[+v]):(v||"none"))+" | correct: "+right)});return[s,rep.join("\n")]}
+let ri=0,RI=[],TI=[],XI=[],rrep="",li=0,LI=[],lrep="";
+function rd(){const r=R[ri];$("rtitle").textContent=r.t;const p=$("rp");p.textContent="";r.p.forEach((x,k)=>{const e=document.createElement("p");e.textContent="ABCD"[k]+".  "+x;p.append(e)});RI=r.p.map((x,k)=>({q:"Paragraph "+"ABCD"[k],o:r.h,a:r.ha[k]}));mk($("rh"),RI,0);TI=r.q.map(x=>({q:x[0],o:["True","False","Not Given"],a:x[1]}));mk($("rq"),TI,4);XI=[].concat((r.mi||[]).map(x=>({q:"Which paragraph mentions "+x[0]+"?",o:["A","B","C","D"],a:x[1]})),(r.sc||[]).map(x=>({q:x[0],a:x[1],d:x[2]})),(r.mc||[]).map(x=>({q:x[0],o:x[1],a:x[2]})));mk($("rx"),XI,4+TI.length);$("rxh").style.display=XI.length?"":"none";$("rsc").textContent="";rrep="";$("rout").classList.remove("on")}
+function ld(){if(window.speechSynthesis)speechSynthesis.cancel();LI=L[li].q.map(x=>({...x}));mk($("lq"),LI,0);$("lsc").textContent="";lrep="";$("lt").classList.remove("on");$("lout").classList.remove("on")}
+$("rnew").onclick=()=>{ri=(ri+1)%R.length;clearInterval(tm);$("rtm").textContent="20:00";rd()};
+$("rtimer").onclick=()=>timer(1200,$("rtm"));
+$("rchk").onclick=()=>{const a=chk(RI),b=chk(TI),c=chk(XI);rrep=a[1]+"\n"+b[1]+"\n"+c[1];const sc=a[0]+b[0]+c[0],mx=RI.length+TI.length+XI.length;$("rsc").textContent="Score: "+sc+" / "+mx;raw("Reading: "+R[ri].t,sc,mx)};
+$("rwhy").onclick=()=>{if(!rrep){$("rsc").textContent="Check your answers first.";return}exam("Task: explain reading answers. Plain text, under 170 words, no markdown, no em dashes. For each question the candidate got wrong, state the correct answer, point to the evidence in the passage in a few words, and name the trap (for example Not Given versus False, or a heading that covers only one detail). If everything is correct, say so and give one tip for Band 8 reading. Skip the usual examiner layout.\nPassage:\n"+R[ri].p.join("\n")+"\n\nQuestions and answers:\n"+rrep,$("rout"),$("rwhy"))};
+$("lnew").onclick=()=>{li=(li+1)%L.length;ld()};
+$("lplay").onclick=()=>{if(!window.speechSynthesis){$("lsc").textContent="This browser cannot read aloud. Try Chrome, Edge or Safari.";return}speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(L[li].s);u.lang="en-GB";u.rate=.95;speechSynthesis.speak(u)};
+$("lstop").onclick=()=>{if(window.speechSynthesis)speechSynthesis.cancel()};
+$("lchk").onclick=()=>{const r=chk(LI);lrep=r[1];$("lsc").textContent="Score: "+r[0]+" / "+LI.length;raw("Listening: "+(L[li].t||"Recording "+(li+1)),r[0],LI.length);$("lt").classList.add("on");$("lt").textContent="Transcript:\n"+L[li].s};
+$("lwhy").onclick=()=>{if(!lrep){$("lsc").textContent="Check your answers first.";return}exam("Task: explain listening answers. Plain text, under 150 words, no markdown, no em dashes. For each wrong answer, state the correct answer, quote the few words of the transcript where it is said, and name the trap (a self-correction, a distractor, a number, or spelling). If everything is correct, say so and give one tip for Band 8 listening. Skip the usual examiner layout.\nTranscript:\n"+L[li].s+"\n\nQuestions and answers:\n"+lrep,$("lout"),$("lwhy"))};
+let RS=[];try{RS=JSON.parse(ST.getItem("b8raw")||"[]")}catch(e){}
+function showraw(){const p=$("praw");p.style.whiteSpace="pre-wrap";p.textContent=RS.length?"Reading and Listening practice (latest first)\n"+RS.slice(-8).reverse().map(x=>new Date(x.d).toLocaleDateString()+"   "+x.k+"   "+x.sc+"/"+x.max+" ("+Math.round(x.sc/x.max*100)+"%)").join("\n"):""}
+function raw(k,sc,max){const l=RS[RS.length-1];if(l&&l.k===k&&Date.now()-l.d<6e5){l.sc=sc;l.max=max;l.d=Date.now()}else RS.push({d:Date.now(),k,sc,max});RS=RS.slice(-60);try{ST.setItem("b8raw",JSON.stringify(RS))}catch(e){}showraw()}
+R[0].mi=[["a risk linked to keeping honeybees on rooftops",2],["a comparison of species counts in two types of area",0],["an effect of higher temperatures",1]];R[0].sc=[["Farmland tends to offer vast fields of a single ___ that flower briefly. (ONE WORD)",["crop"],"crop"],["Private gardens can harm colonies through widespread ___ use. (ONE WORD)",["pesticide","pesticides"],"pesticide"]];R[0].mc=[["What is the writer’s main point in paragraph D?",["Bee hotels have solved the problem","Council measures look promising but need more study","Wildflower strips are too costly","Grants should be stopped"],1]];
+R[1].mi=[["a reason some people doubt the results",2],["the types of workplaces that took part",0],["a suggestion that time at work is poorly used",3]];R[1].sc=[["The trial lasted for six ___. (ONE WORD)",["months","month"],"months"],["Critics say the companies ___ and may have been more flexible than average. (ONE WORD)",["volunteered"],"volunteered"]];R[1].mc=[["What do supporters of the trial conclude?",["Shorter weeks suit every job","Many working hours are wasted","Companies should avoid trials","Meetings improve productivity"],1]];
+R.push({t:"Why We Forget",p:["Most people assume that forgetting is a failure of memory, but psychologists increasingly treat it as a useful feature. If the brain stored every detail of every day, finding the important information would become slow and unreliable, much like searching a drawer crammed with old receipts.","In the 1880s the German researcher Hermann Ebbinghaus tested his own memory with lists of nonsense syllables. He found that retention drops steeply within the first hour and then declines more slowly, a pattern now known as the forgetting curve.","Later studies showed that the curve can be flattened. Reviewing material at spaced intervals, for example after one day, one week and one month, produces far stronger recall than reading it repeatedly in a single session. Sleep after learning also appears to help the brain consolidate new information.","Not all researchers agree on the causes. Some argue that memories simply fade, while others claim they remain stored but become harder to retrieve as similar memories interfere with them. The debate remains unresolved, though both views support the value of regular review."],h:["A modern computer model of the brain","Competing explanations for forgetting","Why a loss of memory can be beneficial","The dangers of unreliable witnesses","How review and rest strengthen memory","A famous early experiment on memory loss"],ha:[2,5,4,1],q:[["Ebbinghaus used other people as subjects in his experiments.",1],["Forgetting happens fastest in the first hour after learning.",0],["Ebbinghaus received funding from a university.",2],["Researchers agree on why memories are lost.",1]],mi:[["a recommended schedule for reviewing",2],["an analogy with a cluttered container",0],["an opinion that memories are stored but hard to reach",3]],sc:[["Ebbinghaus tested his memory using lists of nonsense ___. (ONE WORD)",["syllables"],"syllables"],["Sleep may help the brain ___ new information. (ONE WORD)",["consolidate"],"consolidate"]],mc:[["What does the writer say about the debate in paragraph D?",["It has been settled","It has no practical value","Both views support regular review","It only concerns sleep"],2]]});
+R.push({t:"Vertical Farming",p:["As the global population rises, farmers are being asked to produce more food from less land. One response is vertical farming, in which crops are grown in stacked layers inside climate-controlled buildings, often without soil.","Supporters highlight its efficiency. Because water is recycled within the system, vertical farms can use up to 95 per cent less water than traditional fields, and the lack of exposure to weather and pests removes the need for most pesticides. Crops can also be grown close to cities, which cuts transport costs.","The main drawback is energy. Artificial lighting and climate control are expensive, and many farms struggle to cover their electricity bills. For this reason, most commercial operations grow only leafy greens and herbs, which are light, fast-growing and sell at a high price per kilo.","Some companies are now experimenting with cheaper LED lighting and renewable power, and a few are testing staple crops such as wheat. Analysts are cautious: the technology may become a useful supplement to conventional farming rather than a replacement."],h:["The history of farming in cities","Efforts to lower costs and a cautious outlook","A response to the challenge of feeding more people","Government subsidies for farmers","The problem of high energy costs","Advantages that supporters point to"],ha:[2,5,4,1],q:[["Vertical farms always grow crops in soil.",1],["Vertical farms can use much less water than traditional farms.",0],["Vertical farms are already common in most large cities.",2],["Analysts expect vertical farming to replace conventional farming.",1]],mi:[["a reason for locating farms near urban areas",1],["a limit on the range of crops grown",2],["plans to use cheaper electricity sources",3]],sc:[["Water is ___ within the system. (ONE WORD)",["recycled"],"recycled"],["Most commercial farms grow only leafy greens and ___. (ONE WORD)",["herbs"],"herbs"]],mc:[["What is the writer’s attitude to vertical farming in the final paragraph?",["Strongly enthusiastic","Cautiously positive","Openly hostile","Completely uncertain"],1]]});
+L.push({t:"Section 2: community centre",s:"Welcome to the Riverside Community Centre. Let me explain what is on offer this month. The swimming pool is open from six in the morning, but please note that it closes at eight on Fridays for cleaning. For beginners, we run a yoga class every Wednesday, and the instructor is Mrs Lopez. The class costs twelve dollars per session, although members get a discount. If you want to join the gardening group, you should bring your own gloves, because we only provide tools. Finally, car parking is free for the first two hours, but you must register your number plate at the front desk.",q:[{q:"Pool closing time on Fridays",a:["8","8pm","eight","800","800pm"],d:"8 pm"},{q:"Day of the beginners yoga class",o:["Monday","Wednesday","Friday"],a:1},{q:"Yoga instructor’s surname",a:["lopez","mrslopez"],d:"Lopez"},{q:"Cost per yoga session in dollars",a:["12","twelve","12dollars"],d:"12"},{q:"What must gardening members bring?",o:["Tools","Gloves","Seeds"],a:1}]});
+L.push({t:"Section 4: coral reefs",s:"Today I want to talk about coral reefs. Although they cover less than one per cent of the ocean floor, they support about a quarter of all marine species. Reefs are built by tiny animals called polyps, which live in partnership with algae. The algae provide food and give the coral its colour. Unfortunately, when the water becomes too warm, the polyps expel the algae, and the coral turns white. This is known as bleaching. Bleached coral is not dead, but it is under serious stress and may die if temperatures stay high for several weeks. Scientists are now testing methods to protect reefs, including growing heat-resistant coral in nurseries and then transplanting it back to damaged areas.",q:[{q:"Reefs cover less than ___ per cent of the ocean floor.",a:["1","one","1percent","onepercent"],d:"1"},{q:"Reefs are built by tiny animals called ___.",a:["polyps"],d:"polyps"},{q:"The algae give the coral its ___.",a:["colour","color"],d:"colour"},{q:"What is the process of coral turning white called?",a:["bleaching"],d:"bleaching"},{q:"Scientists grow heat-resistant coral in ___.",a:["nurseries","nursery"],d:"nurseries"}]});
+let E=[];try{E=JSON.parse(ST.getItem("b8err")||"[]")}catch(e){}
+function showerr(){const b=$("mbars");b.textContent="";const c={};E.forEach(e=>{c[e.c]=(c[e.c]||0)+1});const ks=Object.keys(c).sort((x,y)=>c[y]-c[x]).slice(0,6);const mx=ks.length?c[ks[0]]:1;ks.forEach(k=>{const r=document.createElement("div");r.className="bar";const l=document.createElement("b");l.textContent=k;const t=document.createElement("div");t.className="trk";const f=document.createElement("div");f.className="fil";f.style.background="var(--pen)";f.style.width=c[k]/mx*100+"%";t.append(f);const s=document.createElement("span");s.textContent=c[k];r.append(l,t,s);b.append(r)});$("mlist").textContent=E.length?"Most recent:\n"+E.slice(-10).reverse().map(e=>e.c+": "+e.w+"  =>  "+e.r).join("\n"):"No mistakes logged yet. Finish a Speaking or Writing assessment and the examiner’s corrections will appear here."}
+function harvest(text,out){const pm=text.match(/PHRASES:([^\n]*)/),mm=text.match(/MISTAKES:([^\n]*)/);
+ if(mm){mm[1].split("|").forEach(x=>{const i=x.indexOf("="),j=x.indexOf("=>");if(i<0||j<=i)return;const c=x.slice(0,i).trim(),w=x.slice(i+1,j).trim(),r=x.slice(j+2).trim();if(c&&w&&r)E.push({d:Date.now(),c,w,r})});E=E.slice(-200);try{ST.setItem("b8err",JSON.stringify(E))}catch(e){}showerr()}
+ if(pm){const d=document.createElement("div");d.style.marginTop="10px";const l=document.createElement("div");l.className="lab";l.textContent="Save phrases to My words:";d.append(l);pm[1].split("|").map(s=>s.trim()).filter(Boolean).slice(0,6).forEach(p=>{const b=document.createElement("button");b.textContent="+ "+p;b.style.margin="4px 4px 0 0";b.onclick=()=>{addw(p,"From examiner feedback.");b.disabled=true;b.textContent="Saved: "+p;pick()};d.append(b)});out.append(d)}}
+$("mdrill").onclick=()=>{const q=$("mquiz");q.textContent="";if(!E.length){q.textContent="No mistakes logged yet.";return}const e=E[Math.floor(Math.random()*E.length)];const p=document.createElement("p");p.textContent="Correct this ("+e.c+"): "+e.w;const a=document.createElement("button");a.textContent="Show answer";const r=document.createElement("p");r.className="mk ok";a.onclick=()=>{r.textContent=e.r};q.append(p,a,r)};
+$("mclr").onclick=()=>{E=[];try{ST.removeItem("b8err")}catch(e){}$("mquiz").textContent="";showerr()};
+["All","General","Health","Education","Technology","Travel","Environment","My words"].forEach(t=>{const o=document.createElement("option");o.value=o.textContent=t;$("ctopic").append(o)});
+$("ctopic").onchange=()=>{ct=$("ctopic").value;ci=-1;pick()};
+$("awb").onclick=()=>{const ok=addw($("aw1").value,$("aw2").value.trim());$("aws").textContent=ok?"Added to My words.":"Enter a new phrase that is not already in the deck.";if(ok){$("aw1").value="";$("aw2").value="";pick()}};
+const BK=["b8box","b8user","b8hist","b8raw","b8err","b8days","b8prof"];
+let DY={};try{DY=JSON.parse(ST.getItem("b8days")||"{}")}catch(e){}
+const tk=()=>{const d=new Date();return new Date(d-d.getTimezoneOffset()*6e4).toISOString().slice(0,10)};
+function streak(){let s=0;const d=new Date();for(let g=0;g<400;g++){const k=new Date(d-d.getTimezoneOffset()*6e4).toISOString().slice(0,10);if(Object.keys(DY[k]||{}).length>0){s++}else if(!(s===0&&k===tk()))break;d.setDate(d.getDate()-1)}return s}
+function pd(){const n=streak();$("pdesc").textContent="Streak: "+n+(n===1?" day":" days")+". Target: Band "+PF.target+". Tick a task when you finish it. The plan uses your recent scores and mistakes."}
+function plan(){const T=[],last=H.slice(-5),a={};["TR","CC","FC","LR","GRA"].forEach(k=>{const v=last.map(h=>h.s[k]).filter(x=>x!=null);if(v.length)a[k]=v.reduce((x,y)=>x+y,0)/v.length});const ks=Object.keys(a).sort((x,y)=>a[x]-a[y]);
+ const W={LR:["Vocabulary is your weakest area. Do 10 flashcards and write a sentence for 3 of them.","cards"],GRA:["Grammar range is your weakest area. Do one grammar drill set.","gram"],CC:["Coherence is your weakest area. Practise one essay part, such as the introduction or a topic sentence.","struct"],TR:["Answering the task fully is your weakest area. Practise a thesis statement.","struct"],FC:["Fluency is your weakest area. Answer one Part 3 question with the mic.","speak"]};
+ if(ks.length)T.push(W[ks[0]]);else T.push(["Do one Writing or Speaking assessment so the plan can find your weakest area.","write"]);
+ const ec={};E.forEach(e=>{ec[e.c]=(ec[e.c]||0)+1});const top=Object.keys(ec).sort((x,y)=>ec[y]-ec[x])[0];if(top)T.push(["Your most frequent error type is "+top+". Run the mistake quiz.","mist"]);
+ T.push(new Date().getDate()%2?["Do one Reading passage and check it.","read"]:["Do one Listening recording and check it.","listen"]);
+ T.push(["Review flashcards for 5 minutes.","cards"]);T.push(["Speak one answer out loud with the mic and assess it.","speak"]);T.push(["Do one grammar drill.","gram"]);
+ const seen={},box=$("ptasks"),done=DY[tk()]||{};box.textContent="";
+ T.filter(t=>!seen[t[1]]&&(seen[t[1]]=1)).slice(0,5).forEach(([txt,tab])=>{const r=document.createElement("div");r.className="row";const c=document.createElement("input");c.type="checkbox";c.checked=!!done[tab];c.setAttribute("aria-label","Done: "+txt);c.onchange=()=>{const k=tk();DY[k]=DY[k]||{};if(c.checked)DY[k][tab]=1;else delete DY[k][tab];try{ST.setItem("b8days",JSON.stringify(DY))}catch(e){}pd()};const s=document.createElement("span");s.textContent=txt;s.style.flex="1";const b=document.createElement("button");b.textContent="Go";b.onclick=()=>{show(tab);window.scrollTo(0,0)};r.append(c,s,b);box.append(r)});pd()}
+document.querySelector('nav button[data-t="plan"]').addEventListener("click",plan);
+$("pexp").onclick=()=>{const o={};BK.forEach(k=>{try{const v=ST.getItem(k);if(v)o[k]=v}catch(e){}});const t=$("pbk");t.style.display="block";t.value=JSON.stringify(o);t.select();$("pgo").style.display="none";$("pst").textContent="Copy this text and keep it somewhere safe, such as a notes app or an email to yourself."};
+$("pimp").onclick=()=>{$("pbk").style.display="block";$("pbk").value="";$("pgo").style.display="inline-block";$("pst").textContent="Paste your backup text, then press Restore."};
+$("pgo").onclick=()=>{try{const o=JSON.parse($("pbk").value);BK.forEach(k=>{if(typeof o[k]==="string")ST.setItem(k,o[k])});$("pst").textContent="Restored. Reload the page to see your data."}catch(e){$("pst").textContent="That backup text is not valid."}};
+const G=[["a second conditional","People don’t exercise, so they get ill.","If people exercised more regularly, they would be far less likely to fall ill."],["a third or mixed conditional","The government did not invest in trains, so the roads are crowded now.","Had the government invested in rail, our roads would not be so congested today."],["a non-defining relative clause (combine into one sentence)","My teacher is a woman. She helped me a lot.","My teacher, who has taught for twenty years, helped me enormously."],["the passive with a modal verb","People should protect forests because they are important.","Forests ought to be protected, as they are vital for biodiversity."],["a concession clause (although or while)","Cars are useful. They pollute the air.","Although cars are useful, they contribute heavily to air pollution."],["a cleft sentence (What I ... is ...)","I like the friendly atmosphere in my hometown most.","What I appreciate most about my hometown is its friendly atmosphere."],["inversion with a negative adverb (Never, Rarely, Seldom)","I have never seen such a crowded beach.","Never have I seen such a crowded beach."],["a participle clause","She studied hard and then she passed the exam.","Having studied hard, she passed the exam with ease."],["a noun clause (It is obvious that ...)","Technology is changing work. This is obvious.","It is obvious that technology is changing the way we work."],["the more ... the more","When people earn more, they spend more.","The more people earn, the more they tend to spend."],["so ... that","The traffic was very heavy. I was late.","The traffic was so heavy that I arrived late."],["a reduced relative clause","The report that was published last year shows a decline.","The report published last year shows a decline."],["not only ... but also (with inversion)","He is talented. He is hardworking.","Not only is he talented, but he is also remarkably hardworking."]];
+let gi=0;function gd(){const g=G[gi];$("gty").textContent="Rewrite using "+g[0];$("gpl").textContent=g[1];$("gmine").value="";$("gans").style.display="none";$("gans").textContent="Model: "+g[2];$("gout").classList.remove("on")}
+$("gshow").onclick=()=>{$("gans").style.display="block"};
+$("gnext").onclick=()=>{gi=(gi+1)%G.length;gd()};
+$("gchk").onclick=()=>{const m=$("gmine").value.trim();if(!m){$("gmine").focus();return}exam("Task: the candidate must rewrite the plain sentence using the target structure. Judge only their rewrite. Say whether the structure is used correctly and sounds natural, fix any grammar, and give one Band 8 alternative. Under 110 words, plain text, no markdown, no em dashes, skip the full layout.\nTarget structure: "+G[gi][0]+"\nPlain sentence: "+G[gi][1]+"\nCandidate rewrite: "+m,$("gout"),$("gchk"))};
+const SP={i:["Introduction","Write a 2 sentence introduction: paraphrase the question in your own words (do not copy it), then state your position clearly. About 35 to 50 words."],t:["Thesis statement","Write one sentence that states your opinion and previews your two main reasons."],p:["Topic sentence","Write the topic sentence for your first body paragraph. State one clear main idea that supports your position, without examples yet."]};
+let sk="i",sq=0;function stq(){$("stq").textContent=WQ[sq%WQ.length];$("sti").textContent=SP[sk][1];$("stx").value="";$("stout").classList.remove("on")}
+seg("stsel",[["i","Introduction"],["t","Thesis"],["p","Topic sentence"]],"i",v=>{sk=v;stq()});
+$("stnew").onclick=()=>{sq=(sq+1)%WQ.length;stq()};
+$("stas").onclick=()=>{const t=$("stx").value.trim();if(t.split(/\s+/).length<8){$("stx").focus();return}exam("IELTS Writing Task 2 part practice: "+SP[sk][0]+". Task given to the candidate: "+SP[sk][1]+" Judge this short part as an examiner would for Task Response, Coherence, Lexical Resource and Grammar. Give an estimated band for this part (0.5 steps), what works, the main problem with the exact words quoted, and one Band 8 model answer for this question. Under 160 words, plain text, no markdown, no em dashes, skip the full layout.\nQuestion: "+WQ[sq%WQ.length]+"\nCandidate answer: "+t,$("stout"),$("stas"))};
+guide($("rg"),RG);guide($("lg"),LG);rd();ld();showraw();showerr();gd();stq();plan();
+const DK2={Work:[["a demanding job","a job that needs a lot of effort. She has a demanding job in finance."],["climb the career ladder","to move up to better jobs. He climbed the career ladder quickly."],["meet a deadline","to finish work on time. We must meet the deadline on Friday."],["a steady income","regular money you can rely on. A steady income lets you plan ahead."],["work as a team","to cooperate with colleagues. Good projects need people who work as a team."],["be made redundant","to lose a job because it is no longer needed. Hundreds were made redundant."],["a career change","moving to a different type of work. A career change at forty is brave."]],Society:[["a close-knit community","a group of people who know and support each other. We grew up in a close-knit community."],["the generation gap","differences between older and younger people. The generation gap shows in music taste."],["social inequality","unfair differences in wealth or opportunity. Social inequality is growing."],["the elderly","older people. The elderly need better care."],["give something back","to do something to thank or help others. Volunteering is a way to give back."],["a sense of responsibility","feeling that you should do the right thing. Chores build a sense of responsibility."],["community spirit","willingness to help neighbours. Community spirit is strong after storms."]],Media:[["mass media","TV, newspapers and the internet reaching many people. Mass media shapes opinion."],["fake news","false stories that look real. Fake news spreads fast on social media."],["keep up to date with","to stay informed about. I keep up to date with the news online."],["a reliable source","a trustworthy place to get facts. Always check you have a reliable source."],["target audience","the group a product is aimed at. The advert’s target audience is teenagers."],["catch up on","to learn recent news. I catch up on the news at night."],["influence public opinion","to change what people think. Celebrities can influence public opinion."]]};
+Object.keys(DK2).forEach(t=>DK2[t].forEach(w=>{FC.push(w);TP[w[0]]=t;const o=document.createElement("option");o.value=o.textContent=t;$("ctopic").insertBefore(o,[...$("ctopic").options].find(x=>x.value==="My words"))}));
+WQ.push("Some people believe that university education should be free for everyone. To what extent do you agree or disagree?","Many young people today prefer to rent rather than buy a home. What are the reasons, and is this a positive or negative development?","Some people think parents should teach children how to behave, while others believe schools should. Discuss both views and give your own opinion.","The increasing use of artificial intelligence at work will cause more problems than benefits. To what extent do you agree or disagree?");
+WA.push("The bar chart shows the number of visitors (in thousands) to three museums in 2015 and 2023.\n\nMuseum A: 2015: 120, 2023: 180\nMuseum B: 2015: 200, 2023: 150\nMuseum C: 2015: 90, 2023: 95\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant.");
+WG.push("You are unable to attend a meeting at work next week. Write a letter to your manager. In your letter:\nexplain why you cannot attend\nsuggest another way you could contribute\nask for a summary of the meeting");
+P1.push("What kind of music do you enjoy?","Do you like shopping online or in stores?","How do you usually spend your evenings?","Is your home in a quiet or busy area?","Do you often take photos? Why?","What was your favourite subject at school?");
+P3.push("Why do some people choose not to have children?","Do you think social media makes people more or less connected?","How important is it for children to learn a second language?","What are the advantages and disadvantages of working abroad?","Should museums and parks be free for everyone? Why?","How can cities reduce traffic problems?");
+CU.push("Describe a book or film that taught you something.\nYou should say:\nwhat it was\nwhen you read or watched it\nwhat you learned\nand explain why it was useful.","Describe a time when you had to wait for something.\nYou should say:\nwhat you were waiting for\nwhere you were\nhow long you waited\nand explain how you felt.","Describe a healthy habit you have.\nYou should say:\nwhat the habit is\nwhen you started it\nhow it helps you\nand explain why you want to keep it.");
+DR.push(["Many people like cities. But cities are crowded.","Many people are drawn to cities, although they tend to be overcrowded.","Despite their overcrowding, cities continue to attract people in search of better opportunities.","are drawn to, tend to be overcrowded, Despite their overcrowding, in search of better opportunities"],["Social media is bad for teenagers because they waste time.","Social media can be harmful to teenagers, as it consumes a great deal of their time.","Excessive use of social media can undermine teenagers’ studies by eating into hours that should be spent learning.","can be harmful to, consumes a great deal of, undermine, eating into hours"],["Working from home is good because you save time and money.","Working from home is advantageous because it saves both time and money.","Remote work brings clear benefits, not least the money saved on commuting and the time reclaimed.","is advantageous, saves both time and money, brings clear benefits, not least, reclaimed"],["I think it is important to learn English.","I firmly believe that learning English is essential in today’s world.","Mastering English opens doors to education and careers that would otherwise remain out of reach.","firmly believe, essential, opens doors to, out of reach"],["First, I will talk about the advantages. Then I will talk about the disadvantages.","This essay will examine the benefits before turning to the drawbacks.","Having weighed up the benefits, I will go on to consider the drawbacks and reach a balanced conclusion.","examine the benefits, turning to the drawbacks, weighed up, balanced conclusion"],["In conclusion, I think the government should do more.","In conclusion, I believe the government ought to take stronger action.","All things considered, decisive government action is the most effective way forward.","ought to take stronger action, All things considered, decisive government action"]);
+L.push({t:"Section 1: library membership",s:"Good afternoon, Harbour Library. Hi, I’d like to join the library. Of course. Can I have your first name? It’s Kenji, that’s K, E, N, J, I. And your address? Forty two Maple Street. Do you want standard membership, which is free, or premium, which costs twenty five dollars a year and lets you borrow ten books instead of five? I’ll take standard, thanks. You can borrow books for three weeks. The library is open until nine on weekdays, but only until five on Sundays.",q:[{q:"First name",a:["kenji"],d:"Kenji"},{q:"House number",a:["42","fortytwo"],d:"42"},{q:"Membership type chosen",o:["Standard","Premium","Student"],a:0},{q:"Loan period in weeks",a:["3","three","3weeks","threeweeks"],d:"3"},{q:"Sunday closing time",a:["5","5pm","five","500","500pm"],d:"5 pm"}]},{t:"Section 3: group project",s:"So, have you chosen a topic for the group presentation? I was thinking about renewable energy, but Sara suggested urban gardening. I prefer urban gardening, because there is more local data available. Good point. We need ten slides, and the presentation is on the fifth of December. Who will prepare the introduction? I can do that, if you handle the conclusion. Fine. We should also meet on Thursday at two o’clock in the study room, because the library will be too noisy.",q:[{q:"Topic chosen",o:["Renewable energy","Urban gardening","Public transport"],a:1},{q:"Why is this topic preferred?",o:["More local data is available","It is easier","The tutor suggested it"],a:0},{q:"Number of slides",a:["10","ten"],d:"10"},{q:"Presentation date",a:["5december","5thdecember","fifthdecember","december5","december5th","thefifthofdecember","5thofdecember"],d:"5 December"},{q:"Meeting place",o:["Library","Study room","Cafe"],a:1}]});
+R.push({t:"Harbourside Fitness Club: Member Information",p:["Opening hours and facilities. The club is open from 6 a.m. to 10 p.m. on weekdays and from 8 a.m. to 6 p.m. at weekends. Facilities include a 25-metre pool, a weights room and two studios for group classes. Towels are available at reception for a small charge.","Joining the club. New members pay a one-off joining fee of $30, which is waived during March. Membership can be monthly or annual, and annual members receive two months free. Students must show a valid ID to receive the reduced rate.","Rules for members. All members must carry their access card at all times. Mobile phones may not be used in the changing rooms. Children under 14 are not permitted in the weights room, but may use the pool when accompanied by an adult.","Cancelling your membership. Monthly members must give 30 days of written notice. Annual memberships cannot be refunded, although they may be transferred to another person for a fee of $15. A membership can be frozen with a doctor’s letter."],h:["Charges for new members","Regulations that all users must follow","When the club is open and what it offers","How to end or change a membership","Special events and competitions","Staff qualifications"],ha:[2,0,1,3],q:[["The club opens earlier on weekdays than at weekends.",0],["Towels are provided free of charge.",1],["The club has a café.",2],["Annual memberships can be refunded.",1]],mi:[["a rule about mobile phones",2],["a charge that is sometimes not applied",1],["an option that needs a doctor’s letter",3]],sc:[["Members must always carry their ___. (NO MORE THAN TWO WORDS)",["accesscard","card"],"access card"],["Monthly members must give 30 days of written ___. (ONE WORD)",["notice"],"notice"]],mc:[["What is the main purpose of paragraph B?",["To explain the costs of joining","To list the club’s rules","To describe the facilities","To advertise a competition"],0]]});
+wq();prog();
+$("acct").textContent=ACCT.mode==="cloud"?"Signed in"+(ACCT.name?" as "+ACCT.name:"")+". Your progress syncs to your account and is private to you.":"Not signed in. Progress saves only in this browser.";
+$("ptg").value=String(PF.target);$("ptt").value=PF.test;
+const sp2=()=>{PF.target=+$("ptg").value;PF.test=$("ptt").value;ST.setItem("b8prof",JSON.stringify(PF));pd()};$("ptg").onchange=sp2;$("ptt").onchange=sp2;pd();
 }
-function newListeningItem(){
-  listenState.item = pickRandom(listeningBank[listenState.level]);
-  renderListeningMeta(); renderListeningQuestions();
-  document.getElementById('listeningResult').innerHTML = '';
-}
-function renderListeningMeta(){
-  document.getElementById('audioTitle').textContent = listenState.item.title;
-  document.getElementById('audioSub').textContent = listenState.item.sub + ' · plays once';
-  document.getElementById('playIcon').innerHTML = '&#9654;';
-  hasPlayed = false;
-  window.speechSynthesis.cancel();
-}
-function renderListeningQuestions(){
-  const container = document.getElementById('listeningQuestions');
-  const item = listenState.item;
-  let controlsHtml = '<div class="level-row" style="margin-bottom:6px;"><button class="refresh-btn" onclick="newListeningItem()">New recording ↻</button></div>';
-  if(item.visual) controlsHtml += item.visual;
-  if(item.type==='mcq'){
-    const shuffledQs = item.qs.map(q=>{
-      const correctText = q.options[q.correct];
-      const opts = shuffle(q.options);
-      return {text:q.text, options:opts, correctIndex:opts.indexOf(correctText)};
-    });
-    container._answerKey = shuffledQs;
-    container.innerHTML = controlsHtml + shuffledQs.map((q,i)=>{
-      const opts = q.options.map((opt,j)=>{
-        const letter = String.fromCharCode(65+j);
-        return `<label class="omr-option"><input type="radio" name="listen${i}" value="${j}"><span class="omr-bubble"></span><span class="omr-letter">${letter}</span><span class="opt-text">${opt}</span></label>`;
-      }).join('');
-      return `<div class="q-block" id="listenBlock${i}"><div class="q-text"><span class="q-num">${i+1}</span>${q.text}</div><div class="omr-row">${opts}</div></div>`;
-    }).join('') + '<button class="primary-btn" onclick="gradeListening()">Submit answers</button>';
-  } else {
-    container._answerKey = null;
-    container.innerHTML = controlsHtml + item.qs.map((q,i)=>`
-      <div class="q-block" id="listenBlock${i}"><div class="q-text"><span class="q-num">${i+1}</span>${q.text}</div>
-      <input type="text" class="blank-input" id="listenInput${i}" placeholder="Your answer"></div>
-    `).join('') + '<button class="primary-btn" onclick="gradeListening()">Submit answers</button>';
-  }
-}
-let hasPlayed = false;
-function playListening(){
-  if(hasPlayed) return;
-  hasPlayed = true;
-  document.getElementById('playIcon').innerHTML = '&#9632;';
-  const utterance = new SpeechSynthesisUtterance(listenState.item.script);
-  utterance.rate = 0.95;
-  utterance.onend = ()=>{ document.getElementById('playIcon').innerHTML = '&#10003;'; };
-  window.speechSynthesis.speak(utterance);
-}
-function gradeListening(){
-  const item = listenState.item;
-  let correctCount = 0;
-  if(item.type==='mcq'){
-    const qs = document.getElementById('listeningQuestions')._answerKey;
-    qs.forEach((q,i)=>{
-      const selected = document.querySelector(`input[name="listen${i}"]:checked`);
-      const block = document.getElementById('listenBlock'+i);
-      const oldFb = block.querySelector('.feedback'); if(oldFb) oldFb.remove();
-      block.classList.remove('correct','incorrect');
-      const fb = document.createElement('div'); fb.className='feedback';
-      if(selected && parseInt(selected.value)===q.correctIndex){
-        correctCount++; block.classList.add('correct'); fb.classList.add('ok'); fb.textContent='Correct.';
-      } else {
-        block.classList.add('incorrect'); fb.classList.add('no'); fb.textContent = `Correct answer: ${q.options[q.correctIndex]}`;
-      }
-      block.appendChild(fb);
-    });
-    scores.listening = correctCount/qs.length;
-  } else {
-    item.qs.forEach((q,i)=>{
-      const input = document.getElementById('listenInput'+i);
-      const val = input.value.trim().toLowerCase();
-      const block = document.getElementById('listenBlock'+i);
-      const oldFb = block.querySelector('.feedback'); if(oldFb) oldFb.remove();
-      block.classList.remove('correct','incorrect');
-      const fb = document.createElement('div'); fb.className='feedback';
-      const isCorrect = q.accept.some(a=>a.toLowerCase()===val);
-      if(isCorrect){ correctCount++; block.classList.add('correct'); fb.classList.add('ok'); fb.textContent='Correct.'; }
-      else { block.classList.add('incorrect'); fb.classList.add('no'); fb.textContent = `Correct answer: ${q.accept[0]}`; }
-      block.appendChild(fb);
-    });
-    scores.listening = correctCount/item.qs.length;
-  }
-  const band = bandFromFraction(scores.listening);
-  document.getElementById('listeningResult').innerHTML = `<div class="score-banner"><div><div class="lab">Score</div><div class="big mono">${correctCount} / 5</div></div><div><div class="lab">Estimated band</div><div class="big mono">${band.toFixed(1)}</div></div></div>`;
-  renderGauges();
-}
-buildLevelRow('listenLevelRow','setListenLevel');
-setListenLevel('medium');
-
-/* ================= WRITING BANK ================= */
-const task1Bank = [
-  { title:'Describe the chart below', prompt:"The chart shows the percentage of households using three different modes of transport for their daily commute in one city, in 1995 and 2025. Summarise the information by selecting and reporting the main features, and make comparisons where relevant. Write at least 150 words.",
-    svg:`<svg viewBox="0 0 420 200" style="width:100%;max-width:420px;display:block;margin:14px 0;">
-      <line x1="40" y1="10" x2="40" y2="170" stroke="#5C6470" stroke-width="1"/><line x1="40" y1="170" x2="400" y2="170" stroke="#5C6470" stroke-width="1"/>
-      <text x="10" y="15" font-size="9" fill="#5C6470">100%</text><text x="10" y="90" font-size="9" fill="#5C6470">50%</text><text x="18" y="174" font-size="9" fill="#5C6470">0%</text>
-      <rect x="70" y="70" width="24" height="100" fill="#16233F"/><rect x="100" y="40" width="24" height="130" fill="#C79A3E"/><text x="75" y="185" font-size="9" fill="#3B4A68">1995</text>
-      <rect x="190" y="120" width="24" height="50" fill="#16233F"/><rect x="220" y="30" width="24" height="140" fill="#C79A3E"/><text x="195" y="185" font-size="9" fill="#3B4A68">2025</text>
-      <rect x="300" y="10" width="12" height="12" fill="#16233F"/><text x="316" y="20" font-size="10" fill="#3B4A68">Car</text>
-      <rect x="300" y="28" width="12" height="12" fill="#C79A3E"/><text x="316" y="38" font-size="10" fill="#3B4A68">Bicycle</text></svg>`,
-    caption:"Car use fell from roughly 65% of households to 25%, while bicycle use rose from about 40% to over 70% across the same period." },
-  { title:'Describe the chart below', prompt:"The chart shows the proportion of electricity generated from four different sources in one country in 2024. Summarise the information by selecting and reporting the main features. Write at least 150 words.",
-    svg:`<svg viewBox="0 0 420 90" style="width:100%;max-width:420px;display:block;margin:14px 0;">
-      <rect x="10" y="30" width="180" height="30" fill="#16233F"/><rect x="190" y="30" width="100" height="30" fill="#C79A3E"/><rect x="290" y="30" width="70" height="30" fill="#8A9199"/><rect x="360" y="30" width="40" height="30" fill="#2F7D53"/>
-      <text x="10" y="20" font-size="9" fill="#3B4A68">Coal 45%</text><text x="190" y="20" font-size="9" fill="#3B4A68">Gas 25%</text><text x="285" y="20" font-size="9" fill="#3B4A68">Wind 17%</text><text x="355" y="20" font-size="9" fill="#3B4A68">Solar 10%</text>
-      <text x="10" y="75" font-size="9" fill="#5C6470">Share of total electricity generation, 2024</text></svg>`,
-    caption:"Coal remained the largest single source at 45%, followed by gas at 25%, with wind and solar together making up the remaining 27%." },
-  { title:'Describe the chart below', prompt:"The graph shows the population of two countries, Country A and Country B, between 1980 and 2020. Summarise the information by selecting and reporting the main features, and make comparisons where relevant. Write at least 150 words.",
-    svg:`<svg viewBox="0 0 420 200" style="width:100%;max-width:420px;display:block;margin:14px 0;">
-      <line x1="40" y1="10" x2="40" y2="170" stroke="#5C6470" stroke-width="1"/><line x1="40" y1="170" x2="400" y2="170" stroke="#5C6470" stroke-width="1"/>
-      <polyline points="40,150 130,130 220,110 310,80 400,40" fill="none" stroke="#16233F" stroke-width="2.5"/>
-      <polyline points="40,160 130,150 220,145 310,140 400,135" fill="none" stroke="#C79A3E" stroke-width="2.5"/>
-      <text x="405" y="45" font-size="9" fill="#16233F">Country A</text><text x="405" y="138" font-size="9" fill="#9C7A2E">Country B</text>
-      <text x="30" y="182" font-size="9" fill="#5C6470">1980</text><text x="390" y="182" font-size="9" fill="#5C6470">2020</text></svg>`,
-    caption:"Country A's population rose steadily and steeply across the period, while Country B grew only marginally, resulting in a much wider gap between the two by 2020." }
-];
-let task1State = { item:null };
-function newTask1(){
-  task1State.item = pickRandom(task1Bank);
-  document.getElementById('task1Title').textContent = task1State.item.title;
-  document.getElementById('task1Prompt').textContent = task1State.item.prompt;
-  document.getElementById('task1Chart').innerHTML = task1State.item.svg;
-  document.getElementById('task1Caption').textContent = task1State.item.caption;
-}
-newTask1();
-
-const task2Bank = {
-  easy:[
-    "Some people think schools should give students homework every day, while others believe students should not be given homework at all. Discuss both views and give your opinion. Write at least 250 words.",
-    "Some people think advertising has a positive effect on society, while others think it has a negative effect. Discuss both views and give your opinion. Write at least 250 words."
-  ],
-  medium:[
-    "Some people believe that studying abroad is the best way to improve language skills and understand another culture. Others think it is more effective to learn about another country and its language without leaving home. Discuss both views and give your own opinion. Write at least 250 words.",
-    "Many people believe social media has changed the way friendships work. To what extent do you agree or disagree? Write at least 250 words."
-  ],
-  hard:[
-    "Some people argue that technology has increased social isolation, while others believe it has brought people closer together. To what extent do you agree or disagree? Write at least 250 words.",
-    "Some argue that economic growth should be a country's top priority, even if it causes environmental harm. To what extent do you agree or disagree? Write at least 250 words."
-  ]
-};
-let task2State = { level:'medium' };
-function setTask2Level(level){
-  task2State.level = level;
-  document.querySelectorAll('#task2LevelRow .level-btn').forEach(b=>b.classList.toggle('active', b.dataset.level===level));
-  document.getElementById('task2Prompt').textContent = pickRandom(task2Bank[level]);
-}
-buildLevelRow('task2LevelRow','setTask2Level');
-setTask2Level('medium');
-
-function updateWordCount(which){
-  const el = document.getElementById(which+'Text');
-  const countEl = document.getElementById(which+'Count');
-  const words = el.value.trim().split(/\s+/).filter(w=>w.length>0);
-  const target = which==='task1' ? 150 : 250;
-  countEl.textContent = words.length + ' words';
-  countEl.className = words.length >= target ? 'ok' : '';
-}
-function markWritingDone(){
-  scores.writing = true; renderGauges();
-  alert('Writing session marked complete. Check your self-assessment ratings above and compare with a teacher or the official band descriptors when you can.');
-}
-
-/* ================= SPEAKING BANK ================= */
-const part2Bank = {
-  easy:[
-    { prompt:'Describe your favourite meal.', points:['what it is','when you usually eat it','how it is made','why you like it'] },
-    { prompt:'Describe a place you like to relax.', points:['where it is','what it looks like','how often you go there','why you find it relaxing'] }
-  ],
-  medium:[
-    { prompt:'Describe a skill you would like to learn.', points:['what the skill is','how you would learn it','how long it would take','why you want to learn this skill'] },
-    { prompt:'Describe a memorable trip you took.', points:['where you went','who you went with','what you did there','why it was memorable'] }
-  ],
-  hard:[
-    { prompt:'Describe a difficult decision you had to make.', points:['what the decision was','what the options were','how you decided','how you felt about it afterwards'] },
-    { prompt:'Describe a change you would like to see in your community.', points:['what the change is','why it is needed','how it could happen','what effect it would have'] }
-  ]
-};
-let speakState = { level:'medium', part2Item:null };
-function setSpeakLevel(level){
-  speakState.level = level;
-  document.querySelectorAll('#speakLevelRow .level-btn').forEach(b=>b.classList.toggle('active', b.dataset.level===level));
-  newPart2();
-}
-function newPart2(){
-  speakState.part2Item = pickRandom(part2Bank[speakState.level]);
-  document.getElementById('cueCardBox').innerHTML = `<p class="prompt">${speakState.part2Item.prompt}</p><p style="font-size:14px;margin:0 0 6px;">You should say:</p><ul class="tip-list" style="margin-bottom:0;">${speakState.part2Item.points.map(p=>`<li>${p}</li>`).join('')}</ul>`;
-}
-buildLevelRow('speakLevelRow','setSpeakLevel');
-
-const part1Pool = [
-  'What do you do — do you work or are you a student?',
-  'What do you like most about the place where you live?',
-  'Do you prefer spending time indoors or outdoors? Why?',
-  'What kind of food do you enjoy eating most?',
-  'How do you usually spend your weekends?',
-  'Is there a hobby you have had since childhood?'
-];
-const part3Pool = [
-  'Do you think schools should teach practical life skills alongside academic subjects?',
-  'How has technology changed the way people learn new skills?',
-  'Is it better to learn a skill alone or with a teacher? Why?',
-  'Do you think people today make decisions more quickly than in the past? Why?',
-  'What role should local communities play in solving local problems?',
-  'Do you think traditional skills are being lost as technology advances?'
-];
-function newPart1(){
-  const picks = shuffle(part1Pool).slice(0,3);
-  document.getElementById('part1List').innerHTML = picks.map(q=>`<li>${q}</li>`).join('');
-}
-function newPart3(){
-  const picks = shuffle(part3Pool).slice(0,3);
-  document.getElementById('part3List').innerHTML = picks.map(q=>`<li>${q}</li>`).join('');
-}
-setSpeakLevel('medium');
-newPart1();
-newPart3();
-
-let speakInterval = null, speakPhase='prep';
-function startSpeakingTimer(){
-  if(speakInterval) return;
-  speakPhase = 'prep';
-  let remaining = 60;
-  document.getElementById('speakPhaseLabel').textContent = '1 MIN PREPARATION';
-  document.getElementById('speakTimerBtn').disabled = true;
-  speakInterval = setInterval(()=>{
-    remaining--;
-    const m = String(Math.floor(remaining/60)).padStart(2,'0');
-    const s = String(remaining%60).padStart(2,'0');
-    document.getElementById('speakTime').textContent = m+':'+s;
-    if(remaining<=0){
-      if(speakPhase==='prep'){ speakPhase='speak'; remaining=120; document.getElementById('speakPhaseLabel').textContent='2 MIN SPEAKING TIME'; }
-      else { clearInterval(speakInterval); speakInterval=null; document.getElementById('speakTimerBtn').disabled=false; document.getElementById('speakTimerBtn').textContent='Restart'; document.getElementById('speakPhaseLabel').textContent='TIME COMPLETE'; }
-    }
-  },1000);
-}
-let mediaRecorder, audioChunks=[], recording=false;
-async function toggleRecording(){
-  const btn = document.getElementById('recBtn'); const dot = document.getElementById('recDot'); const status = document.getElementById('recStatus');
-  if(!recording){
-    try{
-      const stream = await navigator.mediaDevices.getUserMedia({audio:true});
-      mediaRecorder = new MediaRecorder(stream); audioChunks=[];
-      mediaRecorder.ondataavailable = e=>audioChunks.push(e.data);
-      mediaRecorder.onstop = ()=>{
-        const blob = new Blob(audioChunks, {type:'audio/webm'});
-        const url = URL.createObjectURL(blob);
-        const player = document.getElementById('recPlayback');
-        player.src = url; player.style.display='block';
-        stream.getTracks().forEach(t=>t.stop());
-      };
-      mediaRecorder.start(); recording=true; btn.textContent='Stop recording'; dot.classList.add('live'); status.textContent='Recording...';
-    }catch(err){ status.textContent='Microphone access was not granted.'; }
-  } else {
-    mediaRecorder.stop(); recording=false; btn.textContent='Start recording'; dot.classList.remove('live'); status.textContent='Recording saved below — play it back and self-assess.';
-  }
-}
-function markSpeakingDone(){
-  scores.speaking = true; renderGauges();
-  alert('Speaking session marked complete. Listen back to your recording (if you made one) and check: did you keep talking without long pauses, and did you answer the full cue card?');
-}
+boot();
 </script>
 </body>
 </html>
